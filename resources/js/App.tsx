@@ -22,7 +22,6 @@ import "./bootstrap";
 
 const errorSchema = z.object({ message: z.string() });
 
- 
 const isLocal = env.VITE_APP_ENV === "local";
 
 const queryCache = !isLocal
