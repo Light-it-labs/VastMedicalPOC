@@ -1,8 +1,7 @@
 import type { ComponentPropsWithoutRef, ForwardedRef } from "react";
-import { twMerge as tw } from "tailwind-merge";
-
 import { IconWrapper } from "~/ui/IconWrapper";
 import { forwardRef } from "~/utils";
+import { twMerge as tw } from "tailwind-merge";
 
 export const buttonVariants = [
   "primary",
@@ -46,14 +45,14 @@ export const Button = forwardRef(
 
         !disabled && [
           variant === "primary" &&
-          "bg-indigo-600 text-white hover:bg-indigo-700 focus:bg-indigo-600 focus:ring-indigo-100",
+            "bg-indigo-600 text-white hover:bg-indigo-700 focus:bg-indigo-600 focus:ring-indigo-100",
           variant === "outline" &&
-          "border-indigo-600 text-indigo-600 hover:border-indigo-700 hover:text-indigo-700 focus:ring-indigo-100",
+            "border-indigo-600 text-indigo-600 hover:border-indigo-700 hover:text-indigo-700 focus:ring-indigo-100",
           variant === "outline-white" && "border-white text-white focus:ring-0",
           variant === "secondary" &&
-          "text-indigo bg-indigo-50 hover:bg-indigo-100 hover:text-indigo-600 focus:bg-indigo-50 focus:text-indigo-600 focus:ring-blue-100",
+            "text-indigo bg-indigo-50 hover:bg-indigo-100 hover:text-indigo-600 focus:bg-indigo-50 focus:text-indigo-600 focus:ring-blue-100",
           variant === "tertiary-link" &&
-          "text-indigo hover:text-indigo-700 focus:text-indigo-700 focus:ring-1 focus:ring-indigo-700",
+            "text-indigo hover:text-indigo-700 focus:text-indigo-700 focus:ring-1 focus:ring-indigo-700",
         ],
 
         disabled && [
