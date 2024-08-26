@@ -6,7 +6,7 @@ namespace Lightit\Backoffice\Users\App\Request;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
-use Lightit\Insurance\Domain\DataTransferObjects\UserDto;
+use Lightit\Backoffice\Users\Domain\DataTransferObjects\UserDto;
 
 class StoreUserRequest extends FormRequest
 {

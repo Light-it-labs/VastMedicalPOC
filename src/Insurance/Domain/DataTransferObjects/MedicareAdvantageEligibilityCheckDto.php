@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Lightit\Backoffice\Users\Domain\DataTransferObjects;
+namespace Lightit\Insurance\Domain\DataTransferObjects;
 
 use Carbon\Carbon;
 
-class MedicareAdvantageEligibilityCheckDto
+readonly class MedicareAdvantageEligibilityCheckDto
 {
     public function __construct(
-        public readonly string $member_id,
-        public readonly string $first_name,
-        public readonly string $last_name,
-        public readonly Carbon $dob,
+        public string $member_id,
+        public string $first_name,
+        public string $last_name,
+        public Carbon $dob,
     ) {
     }
 }

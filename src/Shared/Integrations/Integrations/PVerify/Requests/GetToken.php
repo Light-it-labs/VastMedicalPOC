@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Lightit\Backoffice\Users\App\Integrations\PVerify\Requests;
+namespace Lightit\Shared\Integrations\Integrations\PVerify\Requests;
 
-use Lightit\Backoffice\Users\App\Integrations\PVerify\PVerifyConnector;
+use Lightit\Shared\Integrations\Integrations\PVerify\PVerifyConnector;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Request\HasConnector;

@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Lightit\Insurance\App\Request\GetAvailableDMEProvidersRequest;
 use Lightit\Insurance\App\Transformers\PayerDMETransformer;
 use Lightit\Insurance\Domain\Actions\GetAvailableDMEProvidersAction;
+
 class GetAvailableDMEProvidersController
 {
     public function __invoke(

@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Lightit\Backoffice\Users\App\Integrations\PVerify\Requests;
+namespace Lightit\Shared\Integrations\Integrations\PVerify\Requests;
 
-use Lightit\Insurance\Domain\DataTransferObjects\pVerifyEligibilitySummaryRequestDTO;
+use Lightit\Backoffice\Users\Domain\DataTransferObjects\PVerifyEligibilitySummaryRequestDTO;
 use Saloon\Http\Request;
 
 class EligibilitySummary extends Request
 {
     public function __construct(
-        protected pVerifyEligibilitySummaryRequestDTO $pVerifyEligibilitySummary,
+        protected PVerifyEligibilitySummaryRequestDTO $pVerifyEligibilitySummary,
     ) {
     }
 

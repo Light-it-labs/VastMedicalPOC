@@ -9,7 +9,7 @@ use Lightit\Shared\App\Enums\USState;
 readonly class GetAvailableDMEProvidersDto
 {
     public function __construct(
-        public string  $payer,
+        public string $payer,
         public USState $state,
     ) {
     }

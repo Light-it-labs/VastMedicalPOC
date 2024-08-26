@@ -7,7 +7,7 @@ namespace Lightit\Shared\Domain\DataTransferObjects;
 use Lightit\Backoffice\DMEProviders\Domain\Models\DMEProvider;
 use Lightit\Backoffice\Payers\Domain\Models\Payer;
 
-class PayersDMEProvidersDTO
+class PayerDMEProviderDTO
 {
     public function __construct(
         public Payer $payer,

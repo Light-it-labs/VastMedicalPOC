@@ -8,13 +8,13 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Lightit\Backoffice\Datasyncs\Domain\Models\Datasync;
-use Lightit\Shared\Domain\DataTransferObjects\PayersDMEProvidersDTO;
-use Lightit\Shared\Domain\Models\PayersDMEProviders;
+use Lightit\Shared\Domain\DataTransferObjects\PayerDMEProviderDTO;
+use Lightit\Shared\Domain\Models\PayersDMEProvider;
 
 class BulkCreatePayersDMEProviders
 {
     /**
-     * @param Collection<int, PayersDMEProvidersDTO> $matrixElements
+     * @param Collection<int, PayerDMEProviderDTO> $matrixElements
      */
     public function execute(Collection $matrixElements, Datasync $datasync): int
     {
@@ -26,7 +26,7 @@ class BulkCreatePayersDMEProviders
             return $result;
         });
         DB::transaction(function () use ($matrixElementsArray) {
-            PayersDMEProviders::insert($matrixElementsArray);
+            PayersDMEProvider::insert($matrixElementsArray);
         });
 
         return 0;
