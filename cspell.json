@@ -13,7 +13,7 @@
     "resources/views/",
     "tsconfig.tsbuildinfo",
     "vendor",
-    "resources/csvs/"
+    "resources/csvs/",
     "package.json"
   ],
   "words": [

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Lightit\Backoffice\Users\Domain\Actions;
 
 use Lightit\Backoffice\Users\App\Notifications\UserRegistered;
-use Lightit\Backoffice\Users\Domain\Models\User;
 use Lightit\Backoffice\Users\Domain\DataTransferObjects\UserDto;
+use Lightit\Backoffice\Users\Domain\Models\User;
 
 class StoreUserAction
 {
