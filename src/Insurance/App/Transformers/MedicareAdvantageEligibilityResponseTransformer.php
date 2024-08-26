@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Lightit\Insurance\App\Request;
 
 use Flugg\Responder\Transformers\Transformer;
-use Lightit\Backoffice\Users\Domain\DataTransferObjects\MedicareAdvantageEligibilityResponseDto;
+use Lightit\Insurance\Domain\DataTransferObjects\MedicareAdvantageEligibilityResponseDto;
 
 class MedicareAdvantageEligibilityResponseTransformer extends Transformer
 {

@@ -21,7 +21,7 @@ use Lightit\Shared\Domain\Actions\BulkCreatePayersDMEProviders;
 use Lightit\Shared\Domain\Actions\GetQuestMatrix;
 use Lightit\Shared\Domain\DataTransferObjects\PayersDMEProvidersDTO;
 
-class ProcessQuestMatrix extends Command
+class ProcessQuestMatrixCommand extends Command
 {
     /**
      * @var string
@@ -43,9 +43,7 @@ class ProcessQuestMatrix extends Command
         parent::__construct();
     }
 
-    public function handle(
-
-    ): int {
+    public function handle(): int {
         $datasync = null;
         DB::transaction(function () use (&$datasync) {
             $datasync = Datasync::create([
@@ -113,6 +111,7 @@ class ProcessQuestMatrix extends Command
                 )
             );
         }
+
         return $this->bulkCreateDMEProviders->execute($fullDmeData, $datasync);
     }
 
@@ -132,6 +131,7 @@ class ProcessQuestMatrix extends Command
                 state: $state,
             ));
         }
+        
         return $this->bulkCreatePayersDMEProviders->execute($payersToDME, $datasync);
     }
 

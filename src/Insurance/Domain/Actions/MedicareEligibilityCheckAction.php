@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Lightit\Backoffice\Users\Domain\Actions;
 
-use Lightit\Backoffice\Users\Domain\DataTransferObjects\MedicareEligibilityCheckDto;
-use Lightit\Backoffice\Users\Domain\DataTransferObjects\MedicareEligibilityResponseDto;
+use Lightit\Insurance\Domain\DataTransferObjects\MedicareEligibilityCheckDto;
+use Lightit\Insurance\Domain\DataTransferObjects\MedicareEligibilityResponseDto;
 use Lightit\Shared\App\Enums\USState;
 
 class MedicareEligibilityCheckAction

@@ -7,7 +7,7 @@ namespace Lightit\Backoffice\Users\App\Controllers;
 use Illuminate\Http\JsonResponse;
 use Lightit\Backoffice\Users\App\Request\StoreUserRequest;
 use Lightit\Backoffice\Users\App\Transformers\UserTransformer;
-use Lightit\Backoffice\Users\Domain\Actions\StoreUserAction;
+use Lightit\Insurance\Domain\Actions\StoreUserAction;
 
 class StoreUserController
 {

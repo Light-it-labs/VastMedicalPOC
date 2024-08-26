@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Lightit\Backoffice\Users\App\Integrations\pVerify\Requests;
+namespace Lightit\Backoffice\Users\App\Integrations\PVerify\Requests;
 
-use Lightit\Backoffice\Users\Domain\DataTransferObjects\pVerifyEligibilitySummaryRequestDTO;
+use Lightit\Insurance\Domain\DataTransferObjects\pVerifyEligibilitySummaryRequestDTO;
 use Saloon\Http\Request;
 
 class EligibilitySummary extends Request
