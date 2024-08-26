@@ -7,6 +7,7 @@ namespace Lightit\Insurance\App\Transformers;
 use Flugg\Responder\Transformers\Transformer;
 use Lightit\Backoffice\DMEProviders\Domain\Models\DMEProvider;
 
+
 class DMEProviderTransformer extends Transformer
 {
     public function transform(DMEProvider $dMEProvider): array

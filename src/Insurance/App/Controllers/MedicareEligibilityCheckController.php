@@ -6,7 +6,7 @@ namespace Lightit\Insurance\App\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Lightit\Insurance\App\Request\MedicareEligibilityCheckRequest;
-use Lightit\Insurance\App\Request\MedicareEligibilityResponseTransformer;
+use Lightit\Insurance\App\Transformers\MedicareEligibilityResponseTransformer;
 use Lightit\Insurance\Domain\Actions\MedicareEligibilityCheckAction;
 
 class MedicareEligibilityCheckController
