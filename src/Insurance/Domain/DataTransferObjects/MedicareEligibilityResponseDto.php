@@ -13,6 +13,7 @@ final readonly class MedicareEligibilityResponseDto
         public string $member_id,
         public string $payer,
         public USState $state,
+        public string $benefit,
     ) {
     }
 }

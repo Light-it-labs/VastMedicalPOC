@@ -16,6 +16,7 @@ class MedicareAdvantageEligibilityResponseTransformer extends Transformer
             'member_id' => $medicareAdvantageEligibility->member_id,
             'payer' => $medicareAdvantageEligibility->payer,
             'state' => $medicareAdvantageEligibility->state->value,
+            'benefit' => $medicareAdvantageEligibility->benefit,
         ];
     }
 }

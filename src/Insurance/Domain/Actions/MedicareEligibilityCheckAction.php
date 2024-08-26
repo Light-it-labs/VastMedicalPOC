@@ -17,6 +17,7 @@ class MedicareEligibilityCheckAction
             member_id: $getAvailableDMEProvidersDto->member_id,
             payer: 'Aetna',
             state: USState::California,
+            benefit: 'pharmacy'
         );
     }
 }
