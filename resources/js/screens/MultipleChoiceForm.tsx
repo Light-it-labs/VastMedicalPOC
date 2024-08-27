@@ -1,4 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { checkBenefitsEligibilityQuery } from "~/api/insurance";
 import { Input } from "~/components/Input";
 import { Label } from "~/components/Label";
 import { RadioGroup, RadioGroupItem } from "~/components/RadioGroup";
@@ -95,9 +97,33 @@ const MultipleChoiceForm = () => {
   const isMemberIdSelected = watch("informationType") === "member-id";
   const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<MemberIdFormInputType> = (data) => {
-    console.log({ data });
-    navigate("/pharmacyBenefit");
+  const { mutate: getEligibility } = useMutation({
+    mutationFn: checkBenefitsEligibilityQuery.mutation,
+    onSuccess: (response) => {
+      if (!response.is_eligible) {
+        return navigate("/discount");
+      }
+      if (response.benefit === "pharmacy") {
+        navigate("/pharmacyBenefit");
+      } else {
+        navigate("/providersList");
+      }
+    },
+    onError: (error) => {
+      console.error("Error checking eligibility:", error);
+    },
+  });
+
+  const onSubmit: SubmitHandler<
+    MemberIdFormInputType & PersonalInfoFormInputType
+  > = (data) => {
+    const { firstName, lastName, day, month, year, memberID } = data;
+    getEligibility({
+      firstName,
+      lastName,
+      dob: `${month}-${day}-${year}`,
+      memberId: memberID,
+    });
   };
 
   return (
