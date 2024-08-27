@@ -15,6 +15,8 @@ export interface EligibilityParamsRequestType {
   dob: string;
   memberId: string;
 }
+
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 export const checkBenefitsEligibilityQuery = {
   mutation: async ({
     firstName,
@@ -22,6 +24,7 @@ export const checkBenefitsEligibilityQuery = {
     dob,
     memberId,
   }: EligibilityParamsRequestType) => {
+    await delay(2000);
     const {
       data: { data },
     } = await api.post<ServiceResponse<EligibilityResponseType>>(

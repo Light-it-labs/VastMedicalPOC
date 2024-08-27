@@ -6,6 +6,7 @@ import { StethoscopeIcon } from "~/components/icons/StethoscopeIcon";
 import { Input } from "~/components/Input";
 import { SelectField } from "~/components/SelectField";
 import { useMultiStepFormStore } from "~/stores";
+import Spinner from "~/ui/Spinner";
 import type { SubmitHandler } from "react-hook-form";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -68,7 +69,7 @@ export const InsuranceForm = () => {
     mode: "onSubmit",
   });
 
-  const { mutate: getEligibility } = useMutation({
+  const { mutate: getEligibility, isPending } = useMutation({
     mutationFn: checkBenefitsEligibilityQuery.mutation,
     onSuccess: (response) => {
       if (!response.is_eligible) {
@@ -186,7 +187,7 @@ export const InsuranceForm = () => {
             )}
             type="submit"
           >
-            Submit
+            {isPending ? <Spinner /> : "Submit"}
           </button>
         </div>
       </form>

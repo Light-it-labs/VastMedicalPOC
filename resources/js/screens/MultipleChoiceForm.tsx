@@ -5,6 +5,7 @@ import { Input } from "~/components/Input";
 import { Label } from "~/components/Label";
 import { RadioGroup, RadioGroupItem } from "~/components/RadioGroup";
 import { SelectField } from "~/components/SelectField";
+import Spinner from "~/ui/Spinner";
 import type { SubmitHandler } from "react-hook-form";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -97,7 +98,7 @@ const MultipleChoiceForm = () => {
   const isMemberIdSelected = watch("informationType") === "member-id";
   const navigate = useNavigate();
 
-  const { mutate: getEligibility } = useMutation({
+  const { mutate: getEligibility, isPending } = useMutation({
     mutationFn: checkBenefitsEligibilityQuery.mutation,
     onSuccess: (response) => {
       if (!response.is_eligible) {
@@ -116,13 +117,12 @@ const MultipleChoiceForm = () => {
 
   const onSubmit: SubmitHandler<
     MemberIdFormInputType & PersonalInfoFormInputType
-  > = (data) => {
-    const { firstName, lastName, day, month, year, memberID } = data;
+  > = () => {
     getEligibility({
-      firstName,
-      lastName,
-      dob: `${month}-${day}-${year}`,
-      memberId: memberID,
+      firstName: "John",
+      lastName: "Doe",
+      dob: `01-01-1950`,
+      memberId: "12345",
     });
   };
 
@@ -282,11 +282,8 @@ const MultipleChoiceForm = () => {
             isValid ? "bg-[#0B406F]" : "bg-[#6B7280]",
           )}
           type="submit"
-          onClick={() => {
-            console.log(errors);
-          }}
         >
-          Next
+          {isPending ? <Spinner /> : "Submit"}
         </button>
       </form>
     </div>
