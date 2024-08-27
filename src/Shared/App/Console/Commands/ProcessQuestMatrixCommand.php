@@ -19,9 +19,9 @@ use Lightit\Backoffice\Payers\Domain\Enums\PayerType;
 use Lightit\Backoffice\Payers\Domain\Models\Payer;
 use Lightit\Shared\Domain\Actions\BulkCreatePayersDMEProviders;
 use Lightit\Shared\Domain\Actions\GetQuestMatrix;
-use Lightit\Shared\Domain\DataTransferObjects\PayersDMEProvidersDTO;
+use Lightit\Shared\Domain\DataTransferObjects\PayerDMEProviderDTO;
 
-class ProcessQuestMatrix extends Command
+class ProcessQuestMatrixCommand extends Command
 {
     /**
      * @var string
@@ -43,9 +43,8 @@ class ProcessQuestMatrix extends Command
         parent::__construct();
     }
 
-    public function handle(
-
-    ): int {
+    public function handle(): int
+    {
         $datasync = null;
         DB::transaction(function () use (&$datasync) {
             $datasync = Datasync::create([
@@ -113,6 +112,7 @@ class ProcessQuestMatrix extends Command
                 )
             );
         }
+
         return $this->bulkCreateDMEProviders->execute($fullDmeData, $datasync);
     }
 
@@ -126,12 +126,13 @@ class ProcessQuestMatrix extends Command
         foreach ($matrixData as $item) {
             /** @var string  $state */
             $state = $item['ADC_State__c'];
-            $payersToDME->push(new PayersDMEProvidersDTO(
+            $payersToDME->push(new PayerDMEProviderDTO(
                 payer: Payer::where('name', $item['ADC_ADC_Name__c'])->firstOrFail(),
                 dmeProvider: DMEProvider::where('name', $item['ADC_DME_Name__c'])->firstOrFail(),
                 state: $state,
             ));
         }
+
         return $this->bulkCreatePayersDMEProviders->execute($payersToDME, $datasync);
     }
 

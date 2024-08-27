@@ -2,36 +2,25 @@
 
 declare(strict_types=1);
 
-namespace Lightit\Backoffice\Users\Domain\Actions;
+namespace Lightit\Insurance\Domain\Actions;
 
 use Illuminate\Support\Collection;
-use Lightit\Backoffice\Users\Domain\DataTransferObjects\DMEProviderDto;
-use Lightit\Backoffice\Users\Domain\DataTransferObjects\GetAvailableDMEProvidersDto;
+use Lightit\Backoffice\Payers\Domain\Models\Payer;
+use Lightit\Insurance\Domain\DataTransferObjects\GetAvailableDMEProvidersDto;
+use Lightit\Shared\Domain\Models\PayersDMEProvider;
 
 class GetAvailableDMEProvidersAction
 {
     /**
-     * @return Collection<int, DMEProviderDto>
+     * @return Collection<int, PayersDMEProvider>
      */
     public function execute(GetAvailableDMEProvidersDto $getAvailableDMEProvidersDto): Collection
     {
-        $dmeProviders = [
-            new DMEProviderDto(
-                id: '1',
-                //cspell: disable-next-line
-                name: 'Byram Healthcare',
-                phone: '800-775-4372 Ext. 39027',
-                state: $getAvailableDMEProvidersDto->state,
-            ),
-            new DMEProviderDto(
-                id: '2',
-                name: 'United States Medical Supply',
-                phone: '800-321-0591',
-                state: $getAvailableDMEProvidersDto->state,
-            ),
+        $payer = Payer::where('name', $getAvailableDMEProvidersDto->payer)->firstOrFail();
 
-        ];
-        
-        return collect($dmeProviders);
+        return PayersDMEProvider::where('payer_id', $payer->id)
+            ->where('state', $getAvailableDMEProvidersDto->state)
+            ->with(['dmeProvider', 'payer'])
+            ->get();
     }
 }

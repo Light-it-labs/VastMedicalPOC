@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Lightit\Backoffice\Users\Domain\DataTransferObjects;
+namespace Lightit\Insurance\Domain\DataTransferObjects;
 
 use Lightit\Shared\App\Enums\USState;
 
-class GetAvailableDMEProvidersDto
+readonly class GetAvailableDMEProvidersDto
 {
     public function __construct(
-        public readonly string $payer,
-        public readonly USState $state,
+        public string $payer,
+        public USState $state,
     ) {
     }
 }

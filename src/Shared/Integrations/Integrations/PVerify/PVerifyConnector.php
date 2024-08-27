@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Lightit\Backoffice\Users\App\Integrations\pVerify;
+namespace Lightit\Shared\Integrations\Integrations\PVerify;
 
 use Saloon\Http\Connector;
 
-class pVerifyConnector extends Connector
+class PVerifyConnector extends Connector
 {
     public function resolveBaseUrl(): string
     {

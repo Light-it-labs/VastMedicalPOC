@@ -7,6 +7,7 @@ namespace Lightit\Backoffice\DMEProviders\Domain\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Lightit\Backoffice\Datasyncs\Domain\Models\Datasync;
+use Lightit\Backoffice\DMEProviders\Domain\Enums\BenefitType;
 
 /**
  *
@@ -40,6 +41,10 @@ use Lightit\Backoffice\Datasyncs\Domain\Models\Datasync;
  */
 class DMEProvider extends Model
 {
+    protected $casts = [
+        'benefit_type' => BenefitType::class,
+    ];
+
     protected $guarded = ['id'];
 
     protected $table = 'dme_providers';

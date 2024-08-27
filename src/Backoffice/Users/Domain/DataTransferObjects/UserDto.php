@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Lightit\Backoffice\Users\Domain\DataTransferObjects;
 
-class UserDto
+readonly class UserDto
 {
     public function __construct(
-        private readonly string $name,
-        private readonly string $email,
-        private readonly string $password,
+        private string $name,
+        private string $email,
+        private string $password,
     ) {
     }
 

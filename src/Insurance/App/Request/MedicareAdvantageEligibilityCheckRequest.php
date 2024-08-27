@@ -6,7 +6,7 @@ namespace Lightit\Insurance\App\Request;
 
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
-use Lightit\Backoffice\Users\Domain\DataTransferObjects\MedicareAdvantageEligibilityCheckDto;
+use Lightit\Insurance\Domain\DataTransferObjects\MedicareAdvantageEligibilityCheckDto;
 
 class MedicareAdvantageEligibilityCheckRequest extends FormRequest
 {
@@ -32,7 +32,7 @@ class MedicareAdvantageEligibilityCheckRequest extends FormRequest
     {
         /** @var Carbon $dob */
         $dob = $this->date(self::DOB);
-        
+
         return new MedicareAdvantageEligibilityCheckDto(
             member_id: $this->string(self::MEMBER_ID)->toString(),
             first_name: $this->string(self::FIRST_NAME)->toString(),
