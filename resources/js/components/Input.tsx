@@ -10,8 +10,8 @@ interface InputPropTypes extends ComponentPropsWithRef<"input"> {
 export const Input = forwardRef<HTMLInputElement, InputPropTypes>(
   ({ label, id, placeholder = "", className, errorMessage, ...props }, ref) => {
     return (
-      <div className={tw("gap flex w-full flex-col", className)}>
-        <label htmlFor={id} className="font-semibold">
+      <div className={tw("gap flex w-full flex-col justify-end", className)}>
+        <label htmlFor={id} className="px-2 py-1.5 font-semibold">
           {label}
         </label>
         <input

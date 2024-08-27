@@ -4,7 +4,15 @@ import { checkBenefitsEligibilityQuery } from "~/api/insurance";
 import { ShieldIcon } from "~/components/icons/ShieldIcon";
 import { StethoscopeIcon } from "~/components/icons/StethoscopeIcon";
 import { Input } from "~/components/Input";
-import { SelectField } from "~/components/SelectField";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/Select";
 import { useMultiStepFormStore } from "~/stores";
 import Spinner from "~/ui/Spinner";
 import type { SubmitHandler } from "react-hook-form";
@@ -69,7 +77,7 @@ export const InsuranceForm = () => {
     mode: "onSubmit",
   });
 
-  const { mutate: getEligibility, isPending } = useMutation({
+  const { mutate: getEligibilityMutation, isPending } = useMutation({
     mutationFn: checkBenefitsEligibilityQuery.mutation,
     onSuccess: (response) => {
       if (!response.is_eligible) {
@@ -81,15 +89,12 @@ export const InsuranceForm = () => {
         navigate("/providersList");
       }
     },
-    onError: (error) => {
-      console.error("Error checking eligibility:", error);
-    },
   });
 
   const onSubmit: SubmitHandler<InsuranceFormInputType> = (data) => {
     setMultiStepFormData({ insuranceFormData: data });
     if (multiStepFormData) {
-      getEligibility({
+      getEligibilityMutation({
         firstName: "John",
         lastName: "Doe",
         dob: "02-12-1950",
@@ -115,11 +120,29 @@ export const InsuranceForm = () => {
             control={control}
             name="insurancePlan"
             render={({ field }) => (
-              <SelectField
-                {...field}
-                options={PLAN_TYPE}
-                label={"Plan name/type"}
-              />
+              <SelectGroup className="w-full">
+                <SelectLabel className=" font-semibold">
+                  Plan name/type
+                </SelectLabel>
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select plan" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {PLAN_TYPE.map(({ id, label, value }) => {
+                      return (
+                        <SelectItem
+                          {...field}
+                          key={`${id}${value}`}
+                          value={value}
+                        >
+                          {label}
+                        </SelectItem>
+                      );
+                    })}
+                  </SelectContent>
+                </Select>
+              </SelectGroup>
             )}
           />
           <Input
@@ -144,23 +167,58 @@ export const InsuranceForm = () => {
               control={control}
               name="diabetesType"
               render={({ field }) => (
-                <SelectField
-                  {...field}
-                  options={DIABETES_TYPES}
-                  label={"Diabetes type"}
-                />
+                <SelectGroup className="w-full">
+                  <SelectLabel className="mb-1 font-semibold">
+                    Diabetes type
+                  </SelectLabel>
+                  <Select>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select plan" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {DIABETES_TYPES.map(({ id, label, value }) => {
+                        return (
+                          <SelectItem
+                            {...field}
+                            key={`${id}${value}`}
+                            value={value}
+                          >
+                            {label}
+                          </SelectItem>
+                        );
+                      })}
+                    </SelectContent>
+                  </Select>
+                </SelectGroup>
               )}
             />
-
             <Controller
               control={control}
               name="diabetesManagement"
               render={({ field }) => (
-                <SelectField
-                  {...field}
-                  options={DIABETES_MANAGEMENT}
-                  label={"Current Diabetes management"}
-                />
+                <SelectGroup className="w-full">
+                  <SelectLabel className="mb-1 font-semibold">
+                    Current Diabetes management
+                  </SelectLabel>
+                  <Select>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select plan" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {DIABETES_MANAGEMENT.map(({ id, label, value }) => {
+                        return (
+                          <SelectItem
+                            {...field}
+                            key={`${id}${value}`}
+                            value={value}
+                          >
+                            {label}
+                          </SelectItem>
+                        );
+                      })}
+                    </SelectContent>
+                  </Select>
+                </SelectGroup>
               )}
             />
           </div>

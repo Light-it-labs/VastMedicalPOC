@@ -25,9 +25,7 @@ export const checkBenefitsEligibilityQuery = {
     memberId,
   }: EligibilityParamsRequestType) => {
     await delay(2000);
-    const {
-      data: { data },
-    } = await api.post<ServiceResponse<EligibilityResponseType>>(
+    const response = await api.post<ServiceResponse<EligibilityResponseType>>(
       "/medicare/eligibility-check",
       {
         first_name: firstName,
@@ -37,6 +35,6 @@ export const checkBenefitsEligibilityQuery = {
       },
     );
 
-    return data;
+    return response.data.data;
   },
 };

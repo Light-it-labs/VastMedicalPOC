@@ -4,7 +4,15 @@ import { checkBenefitsEligibilityQuery } from "~/api/insurance";
 import { Input } from "~/components/Input";
 import { Label } from "~/components/Label";
 import { RadioGroup, RadioGroupItem } from "~/components/RadioGroup";
-import { SelectField } from "~/components/SelectField";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/Select";
 import Spinner from "~/ui/Spinner";
 import type { SubmitHandler } from "react-hook-form";
 import { Controller, useForm } from "react-hook-form";
@@ -143,22 +151,56 @@ const MultipleChoiceForm = () => {
             control={control}
             name="diabetesManagement"
             render={({ field }) => (
-              <SelectField
-                {...field}
-                options={DIABETES_MANAGEMENT}
-                label={"Current Diabetes management"}
-              />
+              <SelectGroup className="w-full">
+                <SelectLabel className="mb-1 font-semibold">
+                  Current Diabetes management
+                </SelectLabel>
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select plan" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {DIABETES_MANAGEMENT.map(({ id, label, value }) => {
+                      return (
+                        <SelectItem
+                          {...field}
+                          key={`${id}${value}`}
+                          value={value}
+                        >
+                          {label}
+                        </SelectItem>
+                      );
+                    })}
+                  </SelectContent>
+                </Select>
+              </SelectGroup>
             )}
           />
           <Controller
             control={control}
             name="insurancePlan"
             render={({ field }) => (
-              <SelectField
-                {...field}
-                options={PLAN_TYPE}
-                label={"Plan name/type"}
-              />
+              <SelectGroup className="w-full">
+                <SelectLabel className="mb-1 font-semibold">Plan</SelectLabel>
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select plan" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {PLAN_TYPE.map(({ id, label, value }) => {
+                      return (
+                        <SelectItem
+                          {...field}
+                          key={`${id}${value}`}
+                          value={value}
+                        >
+                          {label}
+                        </SelectItem>
+                      );
+                    })}
+                  </SelectContent>
+                </Select>
+              </SelectGroup>
             )}
           />
         </div>
