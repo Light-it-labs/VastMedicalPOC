@@ -9,7 +9,6 @@ use Lightit\Insurance\App\Request\MedicareAdvantageEligibilityCheckRequest;
 use Lightit\Insurance\App\Transformers\MedicareAdvantageEligibilityResponseTransformer;
 use Lightit\Insurance\Domain\Actions\MedicareAdvantageEligibilityCheckAction;
 
-
 class MedicareAdvantageEligibilityCheckController
 {
     public function __invoke(
