@@ -12,7 +12,6 @@ use Lightit\Shared\App\Enums\USState;
 
 class EligibilityCheckRequest extends FormRequest
 {
-    public const MEMBER_ID = 'member_id';
     public const FIRST_NAME = 'first_name';
     public const LAST_NAME = 'last_name';
     public const DOB = 'dob';
@@ -32,7 +31,6 @@ class EligibilityCheckRequest extends FormRequest
     public function rules(): array
     {
         return [
-            self::MEMBER_ID => ['required', 'string'],
             self::FIRST_NAME => ['required', 'string'],
             self::LAST_NAME => ['required', 'string'],
             self::DOB => ['required', 'date'],
@@ -62,7 +60,6 @@ class EligibilityCheckRequest extends FormRequest
         $dob = $this->date(self::DOB);
 
         return new EligibilityCheckDto(
-            member_id: $this->string(self::MEMBER_ID)->toString(),
             first_name: $this->string(self::FIRST_NAME)->toString(),
             last_name: $this->string(self::LAST_NAME)->toString(),
             dob: $dob,

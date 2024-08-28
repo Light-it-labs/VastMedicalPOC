@@ -2,22 +2,22 @@
 
 declare(strict_types=1);
 
-namespace Lightit\Shared\Integrations\Integrations\PVerify\Requests;
+namespace Lightit\Shared\Integrations\PVerify\Requests;
 
 use Saloon\Enums\Method;
-use Saloon\Http\Request;
 
-class EligibilitySummaryResultsRequest extends Request
+class MbiLookupRequestResults extends BaseRequest
 {
     protected Method $method = Method::GET;
 
     public function __construct(
         protected string $requestId,
     ) {
+        parent::__construct();
     }
 
     public function resolveEndpoint(): string
     {
-        return "/GetEligibilitySummary/{$this->requestId}";
+        return "/API/GetMBIResponse/{$this->requestId}";
     }
 }

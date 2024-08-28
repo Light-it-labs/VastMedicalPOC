@@ -27,7 +27,7 @@ class EligibilitySummaryRequest extends BaseRequest implements HasBody
 
     public function resolveEndpoint(): string
     {
-        return 'api/EligibilitySummary';
+        return 'API/EligibilitySummary';
     }
 
     protected function defaultBody(): array
@@ -41,12 +41,12 @@ class EligibilitySummaryRequest extends BaseRequest implements HasBody
             "subscriber" => [
                 "firstName" => $this->data->firstName,
                 "lastName" => $this->data->lastName,
-                "dob" => $this->data->dob,
+                "dob" => $this->data->dob->format('m/d/Y'),
                 "memberID" => $this->data->memberID,
             ],
             "isSubscriberPatient" => "True",
-            "doS_StartDate" => Carbon::now()->subDay()->format('MM/dd/YYYY'),
-            "doS_EndDate" => Carbon::now()->addDay()->format('MM/dd/YYYY'),
+            "doS_StartDate" => Carbon::now()->subDay()->format('m/d/Y'),
+            "doS_EndDate" => Carbon::now()->addDay()->format('m/d/Y'),
         ];
     }
 }

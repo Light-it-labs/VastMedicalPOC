@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Lightit\Insurance\Domain\Actions;
 
+use Illuminate\Support\Facades\Log;
+use Lightit\Insurance\App\Exceptions\NotEligibleException;
 use Lightit\Insurance\Domain\DataTransferObjects\EligibilityCheckDto;
 use Lightit\Shared\Integrations\PVerify\DataTransferObjects\EligibilitySummaryRequestDTO;
 use Lightit\Shared\Integrations\PVerify\PVerifyConnector;
@@ -38,10 +40,27 @@ class RunPVerifyEligibilitySummaryAction
 
         sleep((int) config('services.pverify.sleep_seconds'));
 
-        $getResultsRequest = new GetEligibilitySummaryResultsRequest((string) $eligibilitySummaryResponse['RequestId']);
+        $getResultsRequest = new GetEligibilitySummaryResultsRequest((string) $eligibilitySummaryResponse['RequestID']);
 
         $getResultResponse = $this->connector->send($getResultsRequest);
 
+        if (
+            ! $getResultResponse->ok()
+            || ! $getResultResponse->body()
+            || $this->notEligible($getResultResponse->json())
+        ) {
+            Log::error(
+                'Failed to check Medicare eligibility',
+                ['requestID' => $eligibilitySummaryResponse['RequestID'], 'response' => $getResultResponse->json(), ]
+            );
+            throw new NotEligibleException();
+        }
+
         return $getResultResponse->json();
+    }
+
+    private function notEligible(array $response): bool
+    {
+        return ! $response['PayerName'];
     }
 }

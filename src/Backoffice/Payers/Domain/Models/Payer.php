@@ -33,6 +33,8 @@ use Lightit\Shared\Domain\Models\PayersDMEProvider;
  * @method static \Illuminate\Database\Eloquent\Builder|Payer whereDataSyncId($value)
  *
  * @property-read Datasync|null $dataSync
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, PayersDMEProvider> $payerDMEProviders
+ * @property-read int|null $payer_d_m_e_providers_count
  *
  * @mixin \Eloquent
  */

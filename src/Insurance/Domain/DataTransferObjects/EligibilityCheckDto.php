@@ -10,7 +10,6 @@ use Lightit\Shared\App\Enums\USState;
 readonly class EligibilityCheckDto
 {
     public function __construct(
-        public string $member_id,
         public string $first_name,
         public string $last_name,
         public Carbon $dob,

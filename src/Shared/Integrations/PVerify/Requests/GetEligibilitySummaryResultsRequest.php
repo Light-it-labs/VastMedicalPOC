@@ -12,10 +12,11 @@ class GetEligibilitySummaryResultsRequest extends BaseRequest
 
     public function __construct(public string $requestId)
     {
+        parent::__construct();
     }
 
     public function resolveEndpoint(): string
     {
-        return 'api/GetEligibilitySummary/' . $this->requestId;
+        return 'API/GetEligibilitySummary/' . $this->requestId;
     }
 }
