@@ -41,6 +41,7 @@ class MedicareEligibilityCheckAction
             member_id: $getAvailableDMEProvidersDto->member_id,
             payer: self::MEDICARE_PAYER,
             state: $getAvailableDMEProvidersDto->state,
+            benefit: 'pharmacy'
         );
     }
 }

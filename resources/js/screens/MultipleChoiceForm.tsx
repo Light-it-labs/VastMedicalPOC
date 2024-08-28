@@ -1,8 +1,19 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { checkBenefitsEligibilityQuery } from "~/api/insurance";
 import { Input } from "~/components/Input";
 import { Label } from "~/components/Label";
 import { RadioGroup, RadioGroupItem } from "~/components/RadioGroup";
-import { SelectField } from "~/components/SelectField";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/Select";
+import Spinner from "~/ui/Spinner";
 import type { SubmitHandler } from "react-hook-form";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -95,9 +106,32 @@ const MultipleChoiceForm = () => {
   const isMemberIdSelected = watch("informationType") === "member-id";
   const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<MemberIdFormInputType> = (data) => {
-    console.log({ data });
-    navigate("/pharmacyBenefit");
+  const { mutate: getEligibility, isPending } = useMutation({
+    mutationFn: checkBenefitsEligibilityQuery.mutation,
+    onSuccess: (response) => {
+      if (!response.is_eligible) {
+        return navigate("/discount");
+      }
+      if (response.benefit === "pharmacy") {
+        navigate("/pharmacyBenefit");
+      } else {
+        navigate("/providersList");
+      }
+    },
+    onError: (error) => {
+      console.error("Error checking eligibility:", error);
+    },
+  });
+
+  const onSubmit: SubmitHandler<
+    MemberIdFormInputType & PersonalInfoFormInputType
+  > = () => {
+    getEligibility({
+      firstName: "John",
+      lastName: "Doe",
+      dob: `01-01-1950`,
+      memberId: "12345",
+    });
   };
 
   return (
@@ -117,22 +151,56 @@ const MultipleChoiceForm = () => {
             control={control}
             name="diabetesManagement"
             render={({ field }) => (
-              <SelectField
-                {...field}
-                options={DIABETES_MANAGEMENT}
-                label={"Current Diabetes management"}
-              />
+              <SelectGroup className="w-full">
+                <SelectLabel className="mb-1 font-semibold">
+                  Current Diabetes management
+                </SelectLabel>
+                <Select onValueChange={field.onChange}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select diabetes management" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {DIABETES_MANAGEMENT.map(({ id, label, value }) => {
+                      return (
+                        <SelectItem
+                          {...field}
+                          key={`${id}${value}`}
+                          value={value}
+                        >
+                          {label}
+                        </SelectItem>
+                      );
+                    })}
+                  </SelectContent>
+                </Select>
+              </SelectGroup>
             )}
           />
           <Controller
             control={control}
             name="insurancePlan"
             render={({ field }) => (
-              <SelectField
-                {...field}
-                options={PLAN_TYPE}
-                label={"Plan name/type"}
-              />
+              <SelectGroup className="w-full">
+                <SelectLabel className="mb-1 font-semibold">Plan</SelectLabel>
+                <Select onValueChange={field.onChange}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select plan" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {PLAN_TYPE.map(({ id, label, value }) => {
+                      return (
+                        <SelectItem
+                          {...field}
+                          key={`${id}${value}`}
+                          value={value}
+                        >
+                          {label}
+                        </SelectItem>
+                      );
+                    })}
+                  </SelectContent>
+                </Select>
+              </SelectGroup>
             )}
           />
         </div>
@@ -256,11 +324,8 @@ const MultipleChoiceForm = () => {
             isValid ? "bg-[#0B406F]" : "bg-[#6B7280]",
           )}
           type="submit"
-          onClick={() => {
-            console.log(errors);
-          }}
         >
-          Next
+          {isPending ? <Spinner /> : "Submit"}
         </button>
       </form>
     </div>

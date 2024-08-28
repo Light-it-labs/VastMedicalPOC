@@ -47,6 +47,12 @@ const providers = [
     email: "info@questhealthsolutions.com",
     phoneNumber: "877-270-7050",
   },
+  {
+    id: 9,
+    name: "Quest Health Solutions",
+    email: "info@questhealthsolutions.com",
+    phoneNumber: "877-270-7050",
+  },
 ];
 
 interface ProviderType {

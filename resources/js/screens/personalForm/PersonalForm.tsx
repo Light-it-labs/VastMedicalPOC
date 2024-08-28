@@ -3,9 +3,13 @@ import { UserIcon } from "~/components/icons/UserIcon";
 import { Input } from "~/components/Input";
 import { useMultiStepFormStore } from "~/stores";
 import type { SubmitHandler } from "react-hook-form";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { twMerge as tw } from "tailwind-merge";
 import { z } from "zod";
+
+import "react-international-phone/style.css";
+
+import { PhoneNumberField } from "./PhoneNumberField";
 
 const formSchema = z.object({
   firstName: z.string().min(1, { message: "First name is required" }),
@@ -34,6 +38,7 @@ export const PersonalForm = () => {
     register,
     handleSubmit,
     formState: { errors },
+    control,
   } = useForm<FormInputType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -55,6 +60,7 @@ export const PersonalForm = () => {
           dateOfBirth: { month: data.month, day: data.day, year: data.year },
         },
       });
+      console.log({ data, multiStepFormData });
       goToNextFormStep();
     }
   };
@@ -130,12 +136,18 @@ export const PersonalForm = () => {
                 />
               </div>
             </div>
-            <Input
-              id="phoneNumber"
-              label="Phone"
-              placeholder="Phone Number (e.g., (123) 456-7890)"
-              {...register("phoneNumber")}
-              errorMessage={errors.phoneNumber?.message}
+
+            <Controller
+              name="phoneNumber"
+              control={control}
+              render={({ field }) => (
+                <PhoneNumberField
+                  label="Phone"
+                  id="phoneNumber"
+                  errorMessage={errors.phoneNumber?.message}
+                  {...field}
+                />
+              )}
             />
           </div>
         </div>

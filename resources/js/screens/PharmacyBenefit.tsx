@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ChevronRightIcon } from "~/components/icons/ChevronRightIcon";
+import { MapPinIcon } from "~/components/icons/MapPinIcon";
 import { FreestyleLogo } from "~/components/logos/FreestyleLogo";
 import { twMerge as tw } from "tailwind-merge";
 
@@ -9,6 +10,7 @@ interface PharmacyPromotion {
   price: string;
   bin: string;
   productName: string;
+  address: string;
 }
 
 const pharmacyPromotions: PharmacyPromotion[] = [
@@ -18,6 +20,7 @@ const pharmacyPromotions: PharmacyPromotion[] = [
     price: "$200",
     bin: "123456",
     productName: "Freestyle Libre 3",
+    address: "1234 Elm Street, Miami, FL 33101",
   },
   {
     id: 2,
@@ -25,6 +28,7 @@ const pharmacyPromotions: PharmacyPromotion[] = [
     price: "$230",
     bin: "123456",
     productName: "Freestyle Libre 3",
+    address: "1234 Elm Street, Miami, FL 33101",
   },
   {
     id: 3,
@@ -32,6 +36,7 @@ const pharmacyPromotions: PharmacyPromotion[] = [
     price: "$267",
     bin: "123456",
     productName: "Freestyle Libre 3",
+    address: "1234 Elm Street, Miami, FL 33101",
   },
   {
     id: 4,
@@ -39,6 +44,7 @@ const pharmacyPromotions: PharmacyPromotion[] = [
     price: "$308",
     bin: "123456",
     productName: "Freestyle Libre 3",
+    address: "1234 Elm Street, Miami, FL 33101",
   },
 ];
 
@@ -50,10 +56,11 @@ export const PharmacyBenefit = () => {
       price: "$200",
       bin: "123456",
       productName: "Freestyle Libre 3",
+      address: "1234 Elm Street, Miami, FL 33101",
     },
   );
 
-  const { price, pharmacyName, productName, bin } = selectedPromotion;
+  const { price, pharmacyName, productName, bin, address } = selectedPromotion;
   return (
     <div className="mx-auto flex w-3/4 flex-col gap-12">
       <div className="flex flex-col gap-12 text-center">
@@ -66,31 +73,36 @@ export const PharmacyBenefit = () => {
         </p>
       </div>
       <div className="flex justify-center gap-8">
-        <div className="flex w-1/3 flex-col gap-4">
+        <div className="flex w-5/12 flex-col gap-4">
           {pharmacyPromotions.map((promotion) => {
-            const { id, pharmacyName, price } = promotion;
+            const { id, pharmacyName, price, address } = promotion;
             return (
               <button
                 key={id}
                 className={tw(
-                  "flex w-full justify-between rounded-md border border-[#F0F7FF] px-4 py-8 shadow-md hover:border-[#bed4ee] hover:bg-[#bed4ee]",
+                  "flex w-full items-center justify-between rounded-md border border-[#F0F7FF] px-4 py-6 shadow-md hover:border-[#bed4ee] hover:bg-[#bed4ee]",
                   selectedPromotion?.id === id
-                    ? "border-[#bed4ee] bg-[#bed4ee]"
+                    ? "border-[#E0EFFE] bg-[#E0EFFE]"
                     : "border-[#F0F7FF]",
                 )}
                 onClick={() => setSelectedPromotion(promotion)}
               >
-                <p>{pharmacyName}</p>
-                <div className="flex gap-2">
-                  <p>{price}</p>
+                <div className="flex flex-col  text-start">
+                  <p className="text-xl font-bold text-[#051E38]">
+                    {pharmacyName}
+                  </p>
+                  <p className="text-[#6B7280]">{address}</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <p className="text-xl font-bold text-[#064C86]">{price}</p>
                   <ChevronRightIcon />
                 </div>
               </button>
             );
           })}
         </div>
-        <div className="flex w-1/3 flex-col items-center gap-8 rounded-lg border  ">
-          <div className="flex w-full justify-center rounded-t-lg rounded-bl-3xl bg-[#bed4ee] p-8 ">
+        <div className="flex w-5/12 flex-col items-center gap-8 rounded-lg border  ">
+          <div className="flex w-full justify-center rounded-t-lg rounded-bl-3xl bg-[#E0EFFE] p-8 ">
             <FreestyleLogo />
           </div>
           <div className="flex w-2/3 flex-col items-center gap-12 text-center ">
@@ -102,6 +114,10 @@ export const PharmacyBenefit = () => {
               Show this coupon at the
               <b>{pharmacyName}</b> Pharmacy.
             </p>
+            <div className="flex items-center gap-2">
+              <MapPinIcon className="h-4 w-4" />
+              <p className=" text-[#6B7280]">{address}</p>
+            </div>
             <div className="flex  w-full justify-between text-[#6B7280]">
               <p>BIN</p>
               <p>{bin}</p>

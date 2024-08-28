@@ -93,6 +93,7 @@
     "testsuites",
     "textmate",
     "tokenable",
+    "Tranformers",
     "uncompromised",
     "VITE",
     "Webgriffe",
@@ -100,7 +101,6 @@
     "Worksome",
     "xdebug",
     "yourserver",
-    "zustand",
-    "headlessui"
+    "zustand"
   ]
 }

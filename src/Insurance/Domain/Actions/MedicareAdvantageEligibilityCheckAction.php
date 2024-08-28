@@ -49,6 +49,7 @@ class MedicareAdvantageEligibilityCheckAction
             member_id: $getAvailableDMEProvidersDto->member_id,
             payer: $getAvailableDMEProvidersDto->payer,
             state: $getAvailableDMEProvidersDto->state,
+            benefit: 'pharmacy'
         );
     }
 }
