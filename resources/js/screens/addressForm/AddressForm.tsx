@@ -1,7 +1,15 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { HomeIcon } from "~/components/icons/HomeIcon";
 import { Input } from "~/components/Input";
-import { SelectField } from "~/components/SelectField";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/Select";
 import { useMultiStepFormStore } from "~/stores";
 import type { SubmitHandler } from "react-hook-form";
 import { Controller, useForm } from "react-hook-form";
@@ -98,6 +106,7 @@ export const AddressForm = () => {
 
   const onSubmit: SubmitHandler<AddressFormInputType> = (data) => {
     setMultiStepFormData({ addressFormData: data });
+    console.log({ data });
     goToNextFormStep();
   };
 
@@ -132,9 +141,30 @@ export const AddressForm = () => {
             control={control}
             name="state"
             render={({ field }) => (
-              <SelectField {...field} options={STATES} label={"State"} />
+              <SelectGroup className="w-full">
+                <SelectLabel className="mb-1 font-semibold">State</SelectLabel>
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select state" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {STATES.map(({ id, label, value }) => {
+                      return (
+                        <SelectItem
+                          {...field}
+                          key={`${id}${value}`}
+                          value={value}
+                        >
+                          {label}
+                        </SelectItem>
+                      );
+                    })}
+                  </SelectContent>
+                </Select>
+              </SelectGroup>
             )}
           />
+
           <Input
             id="zipCode"
             label="Zip code"
