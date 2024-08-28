@@ -6,13 +6,15 @@ namespace Lightit\Shared\Integrations\Integrations\PVerify\Requests;
 
 use Lightit\Backoffice\Users\Domain\DataTransferObjects\PVerifyEligibilitySummaryRequestDTO;
 use Saloon\Http\Request;
+use Saloon\Enums\Method;
 
-class EligibilitySummary extends Request
+class EligibilitySummaryRequest extends Request
 {
+    protected Method $method = Method::POST;
+    
     public function __construct(
         protected PVerifyEligibilitySummaryRequestDTO $pVerifyEligibilitySummary,
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

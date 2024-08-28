@@ -9,7 +9,7 @@ use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Traits\Request\HasConnector;
 
-class GetToken extends Request
+class GetTokenRequest extends Request
 {
     use HasConnector;
 
