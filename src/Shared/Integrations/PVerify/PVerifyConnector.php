@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lightit\Shared\Integrations\Integrations\PVerify;
+namespace Lightit\Shared\Integrations\PVerify;
 
 use Saloon\Http\Connector;
 
@@ -21,6 +21,7 @@ class PVerifyConnector extends Connector
         return [
             'Content-Type' => 'application/json',
             'Accept' => 'application/json',
+            'Client-API-Id' => $this->getApiId(),
         ];
     }
 
