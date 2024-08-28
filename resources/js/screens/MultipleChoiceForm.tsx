@@ -155,9 +155,9 @@ const MultipleChoiceForm = () => {
                 <SelectLabel className="mb-1 font-semibold">
                   Current Diabetes management
                 </SelectLabel>
-                <Select>
+                <Select onValueChange={field.onChange}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select plan" />
+                    <SelectValue placeholder="Select diabetes management" />
                   </SelectTrigger>
                   <SelectContent>
                     {DIABETES_MANAGEMENT.map(({ id, label, value }) => {
@@ -182,7 +182,7 @@ const MultipleChoiceForm = () => {
             render={({ field }) => (
               <SelectGroup className="w-full">
                 <SelectLabel className="mb-1 font-semibold">Plan</SelectLabel>
-                <Select>
+                <Select onValueChange={field.onChange}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select plan" />
                   </SelectTrigger>

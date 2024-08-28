@@ -173,7 +173,7 @@ export const InsuranceForm = () => {
                   </SelectLabel>
                   <Select>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select plan" />
+                      <SelectValue placeholder="Select diabetes type" />
                     </SelectTrigger>
                     <SelectContent>
                       {DIABETES_TYPES.map(({ id, label, value }) => {
@@ -202,7 +202,7 @@ export const InsuranceForm = () => {
                   </SelectLabel>
                   <Select>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select plan" />
+                      <SelectValue placeholder="Select diabetes management" />
                     </SelectTrigger>
                     <SelectContent>
                       {DIABETES_MANAGEMENT.map(({ id, label, value }) => {
