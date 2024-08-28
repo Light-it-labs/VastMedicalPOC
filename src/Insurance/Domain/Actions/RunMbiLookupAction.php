@@ -6,16 +6,17 @@ namespace Lightit\Insurance\Domain\Actions;
 
 use Lightit\Backoffice\Users\Domain\DataTransferObjects\MbiLookupRequestDto;
 use Lightit\Insurance\Domain\DataTransferObjects\EligibilityCheckDto;
-use Lightit\Shared\Integrations\Integrations\PVerify\PVerifyConnector;
 use Lightit\Shared\Integrations\Integrations\PVerify\Requests\MbiLookupRequest;
+use Lightit\Shared\Integrations\PVerify\PVerifyConnector;
 
 class RunMbiLookupAction
 {
     public function __construct(
-        private PVerifyConnector $connector,
-    ) {}
+        private readonly PVerifyConnector $connector,
+    ) {
+    }
 
-    public function execute(EligibilityCheckDto $eligibilityCheckDto)
+    public function execute(EligibilityCheckDto $eligibilityCheckDto): array
     {
         $request = new MbiLookupRequest(new MbiLookupRequestDto(
             firstName: $eligibilityCheckDto->first_name,
@@ -23,9 +24,7 @@ class RunMbiLookupAction
             dob: $eligibilityCheckDto->dob,
         ));
         $response = $this->connector->send($request);
-       
-        $mbiLookupResponseBody = $response->json();
 
-       return $mbiLookupResponseBody;
+        return $response->json();
     }
 }

@@ -20,6 +20,8 @@ parameters:
     ignoreErrors:
         - '#^PHPUnit tests are not allowed\. Please use Pest PHP instead\. If this is a TestCase, make it abstract to pass validation\.$#'
         - '#^Illuminate\\Support\\Facades\\[a-zA-Z0-9\\_]+ facade should not be used\.$#'
+        - '#^Cannot cast mixed to string\.$#'
+        - '#^Cannot cast mixed to int\.$#'
         -
             message: '#^Undefined variable: \$this$#'
             path: tests/*

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lightit\Insurance\App\Request;
+namespace Lightit\Insurance\App\Transformers;
 
 use Flugg\Responder\Transformers\Transformer;
 use Lightit\Insurance\Domain\DataTransferObjects\MedicareAdvantageEligibilityResponseDto;
@@ -16,6 +16,7 @@ class MedicareAdvantageEligibilityResponseTransformer extends Transformer
             'member_id' => $medicareAdvantageEligibility->member_id,
             'payer' => $medicareAdvantageEligibility->payer,
             'state' => $medicareAdvantageEligibility->state->value,
+            'benefit' => $medicareAdvantageEligibility->benefit,
         ];
     }
 }

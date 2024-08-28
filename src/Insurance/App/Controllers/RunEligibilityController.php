@@ -16,7 +16,7 @@ class RunEligibilityController
     ): JsonResponse {
         $eligibilityData = $request->toDto();
 
-        $result = $runEligibilityAction->execute($eligibilityData);
+        $runEligibilityAction->execute($eligibilityData);
         return responder()
             ->success()
             ->respond();

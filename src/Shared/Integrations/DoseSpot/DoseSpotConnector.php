@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lightit\Shared\Integrations\Integrations\DoseSpot;
+namespace Lightit\Shared\Integrations\DoseSpot;
 
 use Saloon\Http\Connector;
 

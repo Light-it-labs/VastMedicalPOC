@@ -8,7 +8,6 @@ use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Enum;
 use Lightit\Insurance\Domain\DataTransferObjects\EligibilityCheckDto;
-use Lightit\Insurance\Domain\DataTransferObjects\MedicareEligibilityCheckDto;
 use Lightit\Shared\App\Enums\USState;
 
 class EligibilityCheckRequest extends FormRequest
