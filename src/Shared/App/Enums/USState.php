@@ -7,6 +7,8 @@ namespace Lightit\Shared\App\Enums;
 enum USState: string
 {
     case Alabama = 'AL';
+    case DistrictOfColumbia = 'DC';
+    case PuertoRico = 'PR';
     case Alaska = 'AK';
     case Arizona = 'AZ';
     case Arkansas = 'AR';

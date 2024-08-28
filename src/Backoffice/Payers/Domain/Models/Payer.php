@@ -6,7 +6,9 @@ namespace Lightit\Backoffice\Payers\Domain\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Lightit\Backoffice\Datasyncs\Domain\Models\Datasync;
+use Lightit\Shared\Domain\Models\PayersDMEProvider;
 
 /**
  *
@@ -44,5 +46,13 @@ class Payer extends Model
     public function dataSync(): BelongsTo
     {
         return $this->belongsTo(DataSync::class);
+    }
+
+    /**
+     * @return HasMany<PayersDMEProvider>
+     */
+    public function payerDMEProviders(): HasMany
+    {
+        return $this->hasMany(PayersDMEProvider::class);
     }
 }

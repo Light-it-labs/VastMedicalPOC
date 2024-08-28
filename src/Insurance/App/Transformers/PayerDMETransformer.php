@@ -9,10 +9,6 @@ use Lightit\Shared\Domain\Models\PayersDMEProvider;
 
 class PayerDMETransformer extends Transformer
 {
-    protected $relations = [
-        'dmeProvider' => DMEProviderTransformer::class,
-    ];
-
     public function transform(PayersDMEProvider $payerDMEProvider): array
     {
         return [
