@@ -25,7 +25,7 @@ const PLAN_TYPES = {
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 export const checkBenefitsEligibilityQuery = {
   mutation: async ({ insuranceFormData }: MultiStepFormData) => {
-    await delay(2000);
+    await delay(5000);
     //Medicare
     if (insuranceFormData?.insuranceType === PLAN_TYPES.medicare) {
       return "dme";
