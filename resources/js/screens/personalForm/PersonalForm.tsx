@@ -57,13 +57,14 @@ export const PersonalForm = () => {
   const { mutate: getEligibilityMutation, isPending } = useMutation({
     mutationFn: checkBenefitsEligibilityQuery.mutation,
     onSuccess: (response) => {
-      if (!response.is_eligible) {
-        return navigate("/discount");
+      console.log(response);
+      if (response === "dme") {
+        return navigate("/providersList");
       }
-      if (response.benefit === "pharmacy") {
+      if (response === "pharmacy") {
         navigate("/pharmacyBenefit");
       } else {
-        navigate("/providersList");
+        navigate("/discount");
       }
     },
   });
@@ -77,12 +78,7 @@ export const PersonalForm = () => {
         },
       });
       if (multiStepFormData) {
-        getEligibilityMutation({
-          firstName: "John",
-          lastName: "Doe",
-          dob: "02-12-1950",
-          memberId: "A234",
-        });
+        getEligibilityMutation(multiStepFormData);
       }
     }
   };
@@ -184,6 +180,9 @@ export const PersonalForm = () => {
               isValid ? "bg-[#0B406F]" : "bg-[#6B7280]",
             )}
             type="submit"
+            onClick={() => {
+              console.log({ multiStepFormData });
+            }}
           >
             {isPending ? <Spinner /> : "Submit"}
           </button>

@@ -48,7 +48,7 @@ export const MedicalInformationForm = () => {
   const {
     handleSubmit,
     control,
-    formState: { errors },
+    formState: { isValid },
   } = useForm<MedicalInformationFormInputType>({
     resolver: zodResolver(MedicalInformationFormSchema),
     defaultValues: {
@@ -136,12 +136,10 @@ export const MedicalInformationForm = () => {
         <div className="flex justify-end">
           <button
             className={tw(
-              "w-1/4 rounded-md bg-[#0B406F]  px-8 py-2 text-center text-white",
+              "w-1/4 rounded-md   px-8 py-2 text-center text-white",
+              isValid ? "bg-[#0B406F]" : "bg-[#6B7280]",
             )}
             type="submit"
-            onClick={() => {
-              console.log(errors);
-            }}
           >
             Next
           </button>

@@ -1,5 +1,4 @@
-import type { ServiceResponse } from "./axios";
-import { api } from "./axios";
+import type { MultiStepFormData } from "~/stores";
 
 export interface EligibilityResponseType {
   benefit: "pharmacy" | "dme" | null;
@@ -16,25 +15,44 @@ export interface EligibilityParamsRequestType {
   memberId: string;
 }
 
+const PLAN_TYPES = {
+  medicare: "medicare",
+  medicareAdv: "medicare-advantage",
+  medicaid: "medicaid",
+  private: "private-insurance",
+} as const;
+
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 export const checkBenefitsEligibilityQuery = {
   mutation: async ({
-    firstName,
-    lastName,
-    dob,
-    memberId,
-  }: EligibilityParamsRequestType) => {
+    insuranceFormData,
+    medicalInformationFormData,
+  }: MultiStepFormData) => {
     await delay(2000);
-    const response = await api.post<ServiceResponse<EligibilityResponseType>>(
-      "/medicare/eligibility-check",
-      {
-        first_name: firstName,
-        last_name: lastName,
-        dob,
-        member_id: memberId,
-      },
-    );
+    console.log({ insuranceFormData });
+    //Medicare
+    if (insuranceFormData?.insuranceType === PLAN_TYPES.medicare) {
+      return "dme";
+    }
 
-    return response.data.data;
+    //Cigna
+    if (insuranceFormData?.insuranceProvider === "cigna") {
+      return "pharmacy";
+    }
+
+    //bcbs
+    if (insuranceFormData?.insuranceProvider === "bcbs") {
+      return "dme";
+    }
+
+    //type 2 and oral medication
+    if (
+      medicalInformationFormData?.diabetesTreatment === "om" &&
+      medicalInformationFormData.diabetesType === "type-2"
+    ) {
+      return "non-eligible";
+    }
+
+    return "non-eligible";
   },
 };
