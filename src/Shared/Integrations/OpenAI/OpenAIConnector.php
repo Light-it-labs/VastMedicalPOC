@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Lightit\Shared\Integrations\OpenAI;
 
 use Saloon\Http\Auth\TokenAuthenticator;
@@ -7,7 +9,6 @@ use Saloon\Http\Connector;
 
 class OpenAIConnector extends Connector
 {
-
     public function resolveBaseUrl(): string
     {
         return 'https://api.openai.com/v1';

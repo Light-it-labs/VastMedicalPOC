@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Lightit\Shared\Integrations\OpenAI\Requests;
 
 use Lightit\Shared\Integrations\OpenAI\OpenAIConnector;
@@ -16,6 +18,7 @@ class MapPayersRequest extends Request implements HasBody
 
     protected string $connector = OpenAIConnector::class;
     protected Method $method = Method::POST;
+
     public function __construct(public array $messages)
     {
     }

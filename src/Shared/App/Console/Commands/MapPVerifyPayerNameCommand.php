@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Lightit\Shared\App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Arr;
 use Lightit\Backoffice\Payers\Domain\Models\Payer;
-use Lightit\Shared\Domain\Actions\GetQuestMatrix;
-use Lightit\Shared\Integrations\OpenAI\Requests\MapPayers;
 use Lightit\Shared\Integrations\OpenAI\Requests\MapPayersRequest;
 use Lightit\Shared\Integrations\PVerify\Requests\GetAllPayers;
 
@@ -25,8 +24,7 @@ class MapPVerifyPayerNameCommand extends Command
 
     public function handle(
         GetAllPayers $pVerifyPayerRequest,
-    ): int
-    {
+    ): int {
         $pVerifyPayersResponse = $pVerifyPayerRequest->send();
         $pVerifyPayerList = collect($pVerifyPayersResponse->json());
         $payerNames = $pVerifyPayerList->pluck('payerName')->toArray();
@@ -41,7 +39,13 @@ class MapPVerifyPayerNameCommand extends Command
                 responde in a json format with the payer from quest as the key and the payers that are a potential match from quest as the value."
         ]]);
         $openAIResponse = $mapPayersRequest->send();
-        $this->info($openAIResponse->json()['choices'][0]['message']['content']);
+        /** @var array $choices */
+        $choices = $openAIResponse->json()['choices'];
+        /** @var array $choice */
+        $choice = Arr::first($choices);
+        /** @var string $content */
+        $content = $choice['message']['content'];
+        $this->info($content);
 
         return self::SUCCESS;
     }
