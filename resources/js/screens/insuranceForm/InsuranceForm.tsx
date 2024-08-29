@@ -178,7 +178,7 @@ export const InsuranceForm = () => {
           </button>
           <button
             className={tw(
-              "w-1/4 rounded-md bg-[#0B406F]  px-8 py-2 text-center text-white",
+              "text-white w-1/4 rounded-md  bg-[#0B406F] px-8 py-2 text-center",
             )}
             type="submit"
             onClick={() => {

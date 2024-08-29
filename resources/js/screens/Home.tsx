@@ -22,7 +22,7 @@ export const Home = () => {
         </div>
         <Link
           to="/stepForm"
-          className="w-2/3 rounded-md bg-[#0B406F] px-8 py-2 text-center text-white"
+          className="text-white w-2/3 rounded-md bg-[#0B406F] px-8 py-2 text-center"
         >
           Get started
         </Link>

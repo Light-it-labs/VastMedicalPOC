@@ -213,14 +213,14 @@ const MultipleChoiceForm = () => {
               onValueChange={field.onChange}
               defaultValue={field.value}
             >
-              <div className="flex w-1/2 items-center space-x-2 rounded-lg border bg-white p-6">
+              <div className="bg-white flex w-1/2 items-center space-x-2 rounded-lg border p-6">
                 <RadioGroupItem
                   value={INFORMATION_TYPE.memberID}
                   id={INFORMATION_TYPE.memberID}
                 />
                 <Label htmlFor={INFORMATION_TYPE.memberID}>Member ID</Label>
               </div>
-              <div className="flex w-1/2 items-center space-x-2 rounded-lg border bg-white p-6">
+              <div className="bg-white flex w-1/2 items-center space-x-2 rounded-lg border p-6">
                 <RadioGroupItem
                   value={INFORMATION_TYPE.personalInformation}
                   id={INFORMATION_TYPE.personalInformation}
@@ -320,7 +320,7 @@ const MultipleChoiceForm = () => {
         </p>
         <button
           className={tw(
-            "w-1/4 self-end  rounded-md px-8 py-2 text-center text-white",
+            "text-white w-1/4  self-end rounded-md px-8 py-2 text-center",
             isValid ? "bg-[#0B406F]" : "bg-[#6B7280]",
           )}
           type="submit"
