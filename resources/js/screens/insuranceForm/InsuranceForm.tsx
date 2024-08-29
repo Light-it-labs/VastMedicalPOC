@@ -35,14 +35,41 @@ const PLAN_TYPE = [
   },
 ];
 
-const InsuranceFormSchema = z.object({
+const INSURANCE_PROVIDER = [
+  {
+    id: 1,
+    value: "cigna",
+    label: "Cigna",
+  },
+  {
+    id: 2,
+    value: "bcbs",
+    label: "Blue Cross Blue Shield",
+  },
+  { id: 3, value: "uhc", label: "UHC" },
+  {
+    id: 4,
+    value: "humana",
+    label: "Humana",
+  },
+];
+
+const baseSchema = z.object({
   insuranceType: z.string().min(1, { message: "Insurance plan is required" }),
-  insuranceProvider: z.string().optional(),
-  rxNumber: z.string().optional(),
-  binNumber: z.string().optional(),
 });
 
-export type InsuranceFormInputType = z.infer<typeof InsuranceFormSchema>;
+const privateInsuranceSchema = baseSchema.extend({
+  insuranceProvider: z
+    .string()
+    .min(1, { message: "Insurance plan is required" }),
+  rxNumber: z.string().min(1, { message: "Insurance plan is required" }),
+  binNumber: z.string().min(1, { message: "Insurance plan is required" }),
+});
+
+export type InsuranceFormInputType = z.infer<typeof baseSchema>;
+export type PrivateInsuranceFormInputType = z.infer<
+  typeof privateInsuranceSchema
+>;
 
 export const InsuranceForm = () => {
   const {
@@ -56,21 +83,30 @@ export const InsuranceForm = () => {
     handleSubmit,
     control,
     register,
-    formState: { errors },
+    formState: { errors, isValid },
     watch,
-  } = useForm<InsuranceFormInputType>({
-    resolver: zodResolver(InsuranceFormSchema),
+  } = useForm({
+    resolver: (values, context, options) => {
+      const isPrivateInsurance = values.insuranceType === "private-insurance";
+
+      const createResolver = zodResolver(
+        isPrivateInsurance ? privateInsuranceSchema : baseSchema,
+      );
+      return createResolver(values, context, options);
+    },
     defaultValues: {
       insuranceType: multiStepFormData?.insuranceFormData?.insuranceType,
       insuranceProvider:
         multiStepFormData?.insuranceFormData?.insuranceProvider,
-      rxNumber: multiStepFormData?.insuranceFormData?.rxNumber,
-      binNumber: multiStepFormData?.insuranceFormData?.binNumber,
+      rxNumber: multiStepFormData?.insuranceFormData?.rxNumber ?? "",
+      binNumber: multiStepFormData?.insuranceFormData?.binNumber ?? "",
     },
     mode: "onSubmit",
   });
 
-  const onSubmit: SubmitHandler<InsuranceFormInputType> = (data) => {
+  const onSubmit: SubmitHandler<
+    InsuranceFormInputType & PrivateInsuranceFormInputType
+  > = (data) => {
     setMultiStepFormData({ insuranceFormData: data });
     goToNextFormStep();
   };
@@ -86,7 +122,13 @@ export const InsuranceForm = () => {
           All fields are required
         </p>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-12">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className={tw(
+          "flex flex-col gap-12",
+          isPrivateInsurance ? "gap-12" : "gap-72",
+        )}
+      >
         <div className="flex justify-between gap-4">
           <Controller
             control={control}
@@ -96,7 +138,7 @@ export const InsuranceForm = () => {
                 <SelectLabel className=" font-semibold">
                   Insurance type
                 </SelectLabel>
-                <Select onValueChange={field.onChange}>
+                <Select {...field} onValueChange={field.onChange}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select your insurance type" />
                   </SelectTrigger>
@@ -128,18 +170,14 @@ export const InsuranceForm = () => {
                   <SelectLabel className=" font-semibold">
                     Insurance provider
                   </SelectLabel>
-                  <Select onValueChange={field.onChange}>
+                  <Select {...field} onValueChange={field.onChange}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select your insurance provider" />
                     </SelectTrigger>
                     <SelectContent>
-                      {PLAN_TYPE.map(({ id, label, value }) => {
+                      {INSURANCE_PROVIDER.map(({ id, label, value }) => {
                         return (
-                          <SelectItem
-                            {...field}
-                            key={`${id}${value}`}
-                            value={value}
-                          >
+                          <SelectItem key={`${id}${value}`} value={value}>
                             {label}
                           </SelectItem>
                         );
@@ -178,7 +216,8 @@ export const InsuranceForm = () => {
           </button>
           <button
             className={tw(
-              "text-white w-1/4 rounded-md  bg-[#0B406F] px-8 py-2 text-center",
+              "w-1/4 rounded-md   px-8 py-2 text-center text-white",
+              isValid ? "bg-[#0B406F]" : "bg-[#6B7280]",
             )}
             type="submit"
             onClick={() => {

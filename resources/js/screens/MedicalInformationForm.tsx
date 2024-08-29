@@ -48,7 +48,7 @@ export const MedicalInformationForm = () => {
   const {
     handleSubmit,
     control,
-    formState: { errors },
+    formState: { isValid },
   } = useForm<MedicalInformationFormInputType>({
     resolver: zodResolver(MedicalInformationFormSchema),
     defaultValues: {
@@ -66,7 +66,7 @@ export const MedicalInformationForm = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-12">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-52">
         <div className="flex flex-col gap-8">
           <div className="flex justify-between">
             <div className="flex items-center gap-2 ">
@@ -89,18 +89,14 @@ export const MedicalInformationForm = () => {
                   <SelectLabel className="mb-1 font-semibold">
                     Diabetes treatment
                   </SelectLabel>
-                  <Select onValueChange={field.onChange}>
+                  <Select {...field} onValueChange={field.onChange}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select diabetes treatment" />
                     </SelectTrigger>
                     <SelectContent>
                       {DIABETES_MANAGEMENT.map(({ id, label, value }) => {
                         return (
-                          <SelectItem
-                            {...field}
-                            key={`${id}${value}`}
-                            value={value}
-                          >
+                          <SelectItem key={`${id}${value}`} value={value}>
                             {label}
                           </SelectItem>
                         );
@@ -118,18 +114,14 @@ export const MedicalInformationForm = () => {
                   <SelectLabel className="mb-1 font-semibold">
                     Diabetes type
                   </SelectLabel>
-                  <Select onValueChange={field.onChange}>
+                  <Select {...field} onValueChange={field.onChange}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select diabetes type" />
                     </SelectTrigger>
                     <SelectContent>
                       {DIABETES_TYPES.map(({ id, label, value }) => {
                         return (
-                          <SelectItem
-                            {...field}
-                            key={`${id}${value}`}
-                            value={value}
-                          >
+                          <SelectItem key={`${id}${value}`} value={value}>
                             {label}
                           </SelectItem>
                         );
@@ -144,12 +136,10 @@ export const MedicalInformationForm = () => {
         <div className="flex justify-end">
           <button
             className={tw(
-              "text-white w-1/4 rounded-md  bg-[#0B406F] px-8 py-2 text-center",
+              "w-1/4 rounded-md   px-8 py-2 text-center text-white",
+              isValid ? "bg-[#0B406F]" : "bg-[#6B7280]",
             )}
             type="submit"
-            onClick={() => {
-              console.log(errors);
-            }}
           >
             Next
           </button>

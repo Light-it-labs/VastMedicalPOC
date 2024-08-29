@@ -16,35 +16,19 @@ interface PharmacyPromotion {
 const pharmacyPromotions: PharmacyPromotion[] = [
   {
     id: 1,
-    pharmacyName: "CVS Caremark",
-    price: "$200",
-    bin: "123456",
+    pharmacyName: "Rite Aid",
+    price: "$15.27",
+    bin: "273829",
     productName: "Freestyle Libre 3",
-    address: "1234 Elm Street, Miami, FL 33101",
+    address: "303 Elm Avenue, GA 30506",
   },
   {
     id: 2,
-    pharmacyName: "OptumRx",
-    price: "$230",
-    bin: "123456",
-    productName: "Freestyle Libre 3",
-    address: "1234 Elm Street, Miami, FL 33101",
-  },
-  {
-    id: 3,
-    pharmacyName: "Express Scripts",
-    price: "$267",
-    bin: "123456",
-    productName: "Freestyle Libre 3",
-    address: "1234 Elm Street, Miami, FL 33101",
-  },
-  {
-    id: 4,
     pharmacyName: "Walgreens",
-    price: "$308",
-    bin: "123456",
+    price: "$12.84",
+    bin: "879820",
     productName: "Freestyle Libre 3",
-    address: "1234 Elm Street, Miami, FL 33101",
+    address: " 3964 Peachtree Road, GA 30506",
   },
 ];
 
@@ -52,11 +36,11 @@ export const PharmacyBenefit = () => {
   const [selectedPromotion, setSelectedPromotion] = useState<PharmacyPromotion>(
     {
       id: 1,
-      pharmacyName: "CVS Caremark",
-      price: "$200",
-      bin: "123456",
+      pharmacyName: "Rite Aid",
+      price: "$15.27",
+      bin: "273829",
       productName: "Freestyle Libre 3",
-      address: "1234 Elm Street, Miami, FL 33101",
+      address: "303 Elm Avenue, GA 30506",
     },
   );
 
@@ -64,9 +48,9 @@ export const PharmacyBenefit = () => {
   return (
     <div className="mx-auto flex w-3/4 flex-col gap-12">
       <div className="flex flex-col gap-12 text-center">
-        <h1 className="text-3xl  text-[#07284A]">
-          Your <b>Freestyle Libre CGM System</b> classifies as a Pharmacy
-          benefit.
+        <h1 className="pt-8  text-3xl text-[#07284A]">
+          Your <b className="text-[#0C8FEB]">Freestyle Libre CGM System</b>{" "}
+          classifies as a Pharmacy benefit.
         </h1>
         <p className="text-[#07284A]">
           You can pick it up at any of the following pharmacies:
@@ -101,7 +85,7 @@ export const PharmacyBenefit = () => {
             );
           })}
         </div>
-        <div className="flex w-5/12 flex-col items-center gap-8 rounded-lg border  ">
+        <div className="flex w-5/12 flex-col items-center gap-8 rounded-lg border pb-4 ">
           <div className="flex w-full justify-center rounded-t-lg rounded-bl-3xl bg-[#E0EFFE] p-8 ">
             <FreestyleLogo />
           </div>
