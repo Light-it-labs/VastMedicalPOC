@@ -20,7 +20,7 @@ export const SelectField = forwardRef<HTMLSelectElement, SelectPropTypes>(
             <Select
               ref={ref}
               className={tw(
-                "bg-white w-full appearance-none rounded-lg border p-4",
+                "w-full appearance-none rounded-lg border bg-white p-4",
               )}
               {...props}
             >

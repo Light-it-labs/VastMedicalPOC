@@ -1,4 +1,3 @@
-import { Button } from "~/components/Button";
 import { InfoIcon } from "~/components/icons/InfoIcon";
 import { FreestyleLogo } from "~/components/logos/FreestyleLogo";
 
@@ -25,12 +24,14 @@ export const CouponBenefit = () => {
             <div className="w-full rounded-bl-3xl bg-[#F0F7FF] px-8 py-4">
               <FreestyleLogo className="w-full" />
             </div>
-            <div className="flex flex-col items-center justify-start gap-3 px-8 text-center text-blue-dark">
+            <div className="py-8p flex flex-col items-center justify-start gap-3 px-8 text-center text-blue-dark">
               <div className="text-4xl font-bold text-freestyle-libre-red">
                 $75
               </div>
               <div className="text-xl font-bold">Freestyle Libre 3</div>
-              <div>Use this coupon at your local Pharmacy.</div>
+              <div className="w-2/3">
+                Use this coupon at your local Pharmacy.
+              </div>
               <div className="pt-12 text-blue underline">
                 <a href="/pharmacies"> Find pharmacies near me</a>
               </div>
@@ -41,9 +42,6 @@ export const CouponBenefit = () => {
           <InfoIcon />
           If you think there might be a mistake, please contact us by calling
           877-888-7050.
-        </div>
-        <div className="flex justify-between pt-8">
-          <Button className="w-44 max-w-xs">Back</Button>
         </div>
       </div>
     </div>

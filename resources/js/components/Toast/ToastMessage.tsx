@@ -32,7 +32,7 @@ export const ToastMessage = ({ toast, onClose }: ToastMessageProps) => {
         }}
         role="button"
         tabIndex={0}
-        className="bg-white ring-black pointer-events-auto z-50 w-full max-w-sm overflow-hidden rounded-lg shadow-lg ring-1 ring-opacity-5"
+        className="pointer-events-auto z-50 w-full max-w-sm overflow-hidden rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5"
       >
         <div className="p-4">
           <div className="flex items-start">
@@ -42,18 +42,18 @@ export const ToastMessage = ({ toast, onClose }: ToastMessageProps) => {
 
             <div className="ml-3 flex w-0 flex-1 flex-col gap-1 pt-0.5">
               {toast.title && (
-                <p className="text-gray-900 text-sm font-medium">
+                <p className="text-sm font-medium text-gray-900">
                   {toast.title}
                 </p>
               )}
 
-              <p className="text-gray-500 text-sm">{toast.message}</p>
+              <p className="text-sm text-gray-500">{toast.message}</p>
             </div>
 
             <div className="ml-4 flex flex-shrink-0">
               <button
                 type="button"
-                className="bg-white text-gray-400 hover:text-gray-500 focus:ring-indigo-500 inline-flex rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2"
+                className="inline-flex rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 onClick={onClose}
               >
                 <span className="sr-only">Close</span>

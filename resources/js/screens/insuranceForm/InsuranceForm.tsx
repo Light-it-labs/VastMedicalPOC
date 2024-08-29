@@ -44,9 +44,10 @@ const INSURANCE_PROVIDER = [
   {
     id: 2,
     value: "bcbs",
-    label: "Blue Cross Blue Shield",
+    label: "Blue Cross Blue Shield of Texas",
   },
   { id: 3, value: "uhc", label: "UHC" },
+  { id: 3, value: "florida-blue", label: "Florida Blue" },
   {
     id: 4,
     value: "humana",
@@ -85,7 +86,7 @@ export const InsuranceForm = () => {
     register,
     formState: { errors, isValid },
     watch,
-  } = useForm({
+  } = useForm<InsuranceFormInputType & PrivateInsuranceFormInputType>({
     resolver: (values, context, options) => {
       const isPrivateInsurance = values.insuranceType === "private-insurance";
 
@@ -95,17 +96,18 @@ export const InsuranceForm = () => {
       return createResolver(values, context, options);
     },
     defaultValues: {
-      insuranceType: multiStepFormData?.insuranceFormData?.insuranceType,
+      insuranceType:
+        multiStepFormData?.insuranceFormData?.insuranceType ?? undefined,
       insuranceProvider:
-        multiStepFormData?.insuranceFormData?.insuranceProvider,
-      rxNumber: multiStepFormData?.insuranceFormData?.rxNumber ?? "",
-      binNumber: multiStepFormData?.insuranceFormData?.binNumber ?? "",
+        multiStepFormData?.insuranceFormData?.insuranceProvider ?? undefined,
+      rxNumber: multiStepFormData?.insuranceFormData?.rxNumber ?? undefined,
+      binNumber: multiStepFormData?.insuranceFormData?.binNumber ?? undefined,
     },
     mode: "onSubmit",
   });
 
   const onSubmit: SubmitHandler<
-    InsuranceFormInputType & PrivateInsuranceFormInputType
+    InsuranceFormInputType | PrivateInsuranceFormInputType
   > = (data) => {
     setMultiStepFormData({ insuranceFormData: data });
     goToNextFormStep();

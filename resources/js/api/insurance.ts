@@ -24,12 +24,8 @@ const PLAN_TYPES = {
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 export const checkBenefitsEligibilityQuery = {
-  mutation: async ({
-    insuranceFormData,
-    medicalInformationFormData,
-  }: MultiStepFormData) => {
+  mutation: async ({ insuranceFormData }: MultiStepFormData) => {
     await delay(2000);
-    console.log({ insuranceFormData });
     //Medicare
     if (insuranceFormData?.insuranceType === PLAN_TYPES.medicare) {
       return "dme";
@@ -45,11 +41,8 @@ export const checkBenefitsEligibilityQuery = {
       return "dme";
     }
 
-    //type 2 and oral medication
-    if (
-      medicalInformationFormData?.diabetesTreatment === "om" &&
-      medicalInformationFormData.diabetesType === "type-2"
-    ) {
+    //Florida blue
+    if (insuranceFormData?.insuranceProvider === "florida-blue") {
       return "non-eligible";
     }
 

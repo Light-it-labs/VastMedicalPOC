@@ -41,7 +41,7 @@ export const PhoneNumberField = forwardRef<HTMLInputElement, InputPropTypes>(
             type="tel"
             placeholder={placeholder}
             className={tw(
-              "bg-white w-full rounded-lg border p-4 pl-16 no-spinners",
+              "w-full rounded-lg border bg-white p-4 pl-16 no-spinners",
               errorMessage && "border-red-600",
             )}
             id={id}

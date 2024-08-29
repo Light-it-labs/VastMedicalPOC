@@ -57,14 +57,13 @@ export const PersonalForm = () => {
   const { mutate: getEligibilityMutation, isPending } = useMutation({
     mutationFn: checkBenefitsEligibilityQuery.mutation,
     onSuccess: (response) => {
-      console.log(response);
       if (response === "dme") {
         return navigate("/providersList");
       }
       if (response === "pharmacy") {
         navigate("/pharmacyBenefit");
       } else {
-        navigate("/discount");
+        navigate("/couponBenefit");
       }
     },
   });
@@ -176,7 +175,7 @@ export const PersonalForm = () => {
           </button>
           <button
             className={tw(
-              "text-white w-1/4  self-end rounded-md px-8 py-2 text-center",
+              "w-1/4 self-end  rounded-md px-8 py-2 text-center text-white",
               isValid ? "bg-[#0B406F]" : "bg-[#6B7280]",
             )}
             type="submit"
