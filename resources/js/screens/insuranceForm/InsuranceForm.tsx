@@ -86,7 +86,13 @@ export const InsuranceForm = () => {
           All fields are required
         </p>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-12">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className={tw(
+          "flex flex-col gap-12",
+          isPrivateInsurance ? "gap-12" : "gap-72",
+        )}
+      >
         <div className="flex justify-between gap-4">
           <Controller
             control={control}
@@ -96,7 +102,7 @@ export const InsuranceForm = () => {
                 <SelectLabel className=" font-semibold">
                   Insurance type
                 </SelectLabel>
-                <Select onValueChange={field.onChange}>
+                <Select {...field} onValueChange={field.onChange}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select your insurance type" />
                   </SelectTrigger>
@@ -128,18 +134,14 @@ export const InsuranceForm = () => {
                   <SelectLabel className=" font-semibold">
                     Insurance provider
                   </SelectLabel>
-                  <Select onValueChange={field.onChange}>
+                  <Select {...field} onValueChange={field.onChange}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select your insurance provider" />
                     </SelectTrigger>
                     <SelectContent>
                       {PLAN_TYPE.map(({ id, label, value }) => {
                         return (
-                          <SelectItem
-                            {...field}
-                            key={`${id}${value}`}
-                            value={value}
-                          >
+                          <SelectItem key={`${id}${value}`} value={value}>
                             {label}
                           </SelectItem>
                         );

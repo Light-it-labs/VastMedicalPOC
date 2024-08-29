@@ -31,6 +31,7 @@ const MultiStepForm = () => {
         </p>
       </div>
       <Stepper steps={steps} currentStep={currentFormStep} />
+
       {StepComponent ? <StepComponent /> : <div>Step not found</div>}
     </div>
   );

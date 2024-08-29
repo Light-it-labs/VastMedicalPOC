@@ -98,76 +98,77 @@ export const PersonalForm = () => {
           All fields are required
         </p>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-12">
-        <div className="flex justify-between gap-4">
-          <Input
-            id="firstName"
-            label="First name"
-            {...register("firstName")}
-            errorMessage={errors.firstName?.message}
-          />
-
-          <Input
-            id="lastName"
-            label="Last name"
-            {...register("lastName")}
-            errorMessage={errors.lastName?.message}
-          />
-        </div>
-        <div>
-          <p className="italic">Date of birth</p>
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-32">
+        <div className="flex flex-col gap-9">
           <div className="flex justify-between gap-4">
-            <div className="gap flex w-full flex-col">
-              <div className="flex gap-2">
-                <Input
-                  id="month"
-                  label="Month"
-                  {...register("month", {
-                    setValueAs: (v: string) => parseInt(v, 10),
-                  })}
-                  placeholder="MM"
-                  className="w-16"
-                  maxLength={2}
-                  errorMessage={errors.month?.message}
-                  type="number"
-                />
-
-                <Input
-                  id="day"
-                  label="Day"
-                  {...register("day", {
-                    setValueAs: (v: string) => parseInt(v, 10),
-                  })}
-                  placeholder="DD"
-                  className="w-16"
-                  maxLength={2}
-                  errorMessage={errors.day?.message}
-                  type="number"
-                />
-                <Input
-                  id="year"
-                  label="Year"
-                  {...register("year", {
-                    setValueAs: (v: string) => parseInt(v, 10),
-                  })}
-                  placeholder="YYYY"
-                  className="w-24"
-                  maxLength={4}
-                  errorMessage={errors.year?.message}
-                  type="number"
-                />
-              </div>
-            </div>
+            <Input
+              id="firstName"
+              label="First name"
+              {...register("firstName")}
+              errorMessage={errors.firstName?.message}
+            />
 
             <Input
-              id="zipCode"
-              label="Zip code"
-              {...register("zipCode")}
-              errorMessage={errors.zipCode?.message}
+              id="lastName"
+              label="Last name"
+              {...register("lastName")}
+              errorMessage={errors.lastName?.message}
             />
           </div>
-        </div>
+          <div>
+            <p className="italic">Date of birth</p>
+            <div className="flex justify-between gap-4">
+              <div className="gap flex w-full flex-col">
+                <div className="flex gap-2">
+                  <Input
+                    id="month"
+                    label="Month"
+                    {...register("month", {
+                      setValueAs: (v: string) => parseInt(v, 10),
+                    })}
+                    placeholder="MM"
+                    className="w-16"
+                    maxLength={2}
+                    errorMessage={errors.month?.message}
+                    type="number"
+                  />
 
+                  <Input
+                    id="day"
+                    label="Day"
+                    {...register("day", {
+                      setValueAs: (v: string) => parseInt(v, 10),
+                    })}
+                    placeholder="DD"
+                    className="w-16"
+                    maxLength={2}
+                    errorMessage={errors.day?.message}
+                    type="number"
+                  />
+                  <Input
+                    id="year"
+                    label="Year"
+                    {...register("year", {
+                      setValueAs: (v: string) => parseInt(v, 10),
+                    })}
+                    placeholder="YYYY"
+                    className="w-24"
+                    maxLength={4}
+                    errorMessage={errors.year?.message}
+                    type="number"
+                  />
+                </div>
+              </div>
+
+              <Input
+                id="zipCode"
+                label="Zip code"
+                {...register("zipCode")}
+                errorMessage={errors.zipCode?.message}
+              />
+            </div>
+          </div>
+        </div>
         <div className="flex justify-between">
           <button
             className={tw(
