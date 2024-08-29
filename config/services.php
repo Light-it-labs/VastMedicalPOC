@@ -46,4 +46,8 @@ return [
         'Username' => env('DOSESPOT_USERNAME'),
         'Password' => env('DOSESPOT_PASSWORD'),
     ],
+
+    'openai' => [
+        'api_key' => env('OPENAI_API_KEY'),
+    ],
 ];
