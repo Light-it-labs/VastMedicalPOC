@@ -11,8 +11,8 @@ import "react-international-phone/style.css";
 
 import { useMutation } from "@tanstack/react-query";
 import { checkBenefitsEligibilityQuery } from "~/api/insurance";
-import Spinner from "~/ui/Spinner";
 import { useNavigate } from "react-router-dom";
+import { Button } from "~/components/Button";
 
 const formSchema = z.object({
   firstName: z.string().min(1, { message: "First name is required" }),
@@ -93,7 +93,7 @@ export const PersonalForm = () => {
           All fields are required
         </p>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-32">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-12">
         <div className="flex flex-col gap-9">
           <div className="flex justify-between gap-4">
             <Input
@@ -112,52 +112,56 @@ export const PersonalForm = () => {
           </div>
           <div>
             <p className="italic">Date of birth</p>
-            <div className="flex justify-between gap-4">
-              <div className="gap flex w-full flex-col">
-                <div className="flex gap-2">
-                  <Input
-                    id="month"
-                    label="Month"
-                    {...register("month", {
-                      setValueAs: (v: string) => parseInt(v, 10),
-                    })}
-                    placeholder="MM"
-                    className="w-16"
-                    maxLength={2}
-                    errorMessage={errors.month?.message}
-                    type="number"
-                  />
+            <div className="grid justify-between gap-4 grid-cols-2">
+              <div className="grid gap-2 grid-cols-4">
+                <Input
+                  id="month"
+                  label="Month"
+                  {...register("month", {
+                    setValueAs: (v: string) => parseInt(v, 10),
+                  })}
+                  placeholder="MM"
+                  className=""
+                  maxLength={2}
+                  max={12}
+                  min={1}
+                  errorMessage={errors.month?.message}
+                  type="number"
+                />
 
-                  <Input
-                    id="day"
-                    label="Day"
-                    {...register("day", {
-                      setValueAs: (v: string) => parseInt(v, 10),
-                    })}
-                    placeholder="DD"
-                    className="w-16"
-                    maxLength={2}
-                    errorMessage={errors.day?.message}
-                    type="number"
-                  />
-                  <Input
-                    id="year"
-                    label="Year"
-                    {...register("year", {
-                      setValueAs: (v: string) => parseInt(v, 10),
-                    })}
-                    placeholder="YYYY"
-                    className="w-24"
-                    maxLength={4}
-                    errorMessage={errors.year?.message}
-                    type="number"
-                  />
-                </div>
+                <Input
+                  id="day"
+                  label="Day"
+                  {...register("day", {
+                    setValueAs: (v: string) => parseInt(v, 10),
+                  })}
+                  placeholder="DD"
+                  maxLength={2}
+                  max={31}
+                  min={1}
+                  className=""
+                  errorMessage={errors.day?.message}
+                  type="number"
+                />
+                <Input
+                  id="year"
+                  label="Year"
+                  {...register("year", {
+                    setValueAs: (v: string) => parseInt(v, 10),
+                  })}
+                  placeholder="YYYY"
+                  maxLength={4}
+                  max={2024}
+                  className="col-span-2"
+                  errorMessage={errors.year?.message}
+                  type="number"
+                />
               </div>
 
               <Input
                 id="zipCode"
                 label="Zip code"
+                className="w-full"
                 {...register("zipCode")}
                 errorMessage={errors.zipCode?.message}
               />
@@ -165,26 +169,26 @@ export const PersonalForm = () => {
           </div>
         </div>
         <div className="flex justify-between">
-          <button
-            className={tw(
-              "w-1/4 rounded-md  border border-[#07284A] px-8 py-2 text-center text-[#07284A]",
-            )}
+          <Button
+            className={tw("w-1/4")}
+            variant="secondary"
             onClick={() => goToPreviousFormStep()}
           >
             Back
-          </button>
-          <button
+          </Button>
+          <Button
+            variant="primary"
+            disabled={!isValid}
+            isLoading={isPending}
             className={tw(
-              "w-1/4 self-end  rounded-md px-8 py-2 text-center text-white",
-              isValid ? "bg-[#0B406F]" : "bg-[#6B7280]",
-            )}
+              "w-1/4")}
             type="submit"
             onClick={() => {
               console.log({ multiStepFormData });
             }}
           >
-            {isPending ? <Spinner /> : "Submit"}
-          </button>
+            Submit
+          </Button>
         </div>
       </form>
     </div>

@@ -14,6 +14,7 @@ import type { SubmitHandler } from "react-hook-form";
 import { Controller, useForm } from "react-hook-form";
 import { twMerge as tw } from "tailwind-merge";
 import { z } from "zod";
+import { Button } from "~/components/Button";
 
 const DIABETES_TYPES = [
   { id: 1, value: "none", label: "None" },
@@ -66,7 +67,7 @@ export const MedicalInformationForm = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-52">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8 justify-between h-full pb-12">
         <div className="flex flex-col gap-8">
           <div className="flex justify-between">
             <div className="flex items-center gap-2 ">
@@ -134,15 +135,14 @@ export const MedicalInformationForm = () => {
           </div>
         </div>
         <div className="flex justify-end">
-          <button
-            className={tw(
-              "w-1/4 rounded-md   px-8 py-2 text-center text-white",
-              isValid ? "bg-[#0B406F]" : "bg-[#6B7280]",
-            )}
+          <Button
+            variant="primary"
+            disabled={!isValid}
+            className={tw("w-1/4")}
             type="submit"
           >
             Next
-          </button>
+          </Button>
         </div>
       </form>
     </div>
