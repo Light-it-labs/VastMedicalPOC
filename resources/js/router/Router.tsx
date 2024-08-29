@@ -20,11 +20,6 @@ export const Router = () => {
     state.token ? "loggedIn" : "loggedOut",
   );
 
-  const getLayoutClassName = (pathname: string) => {
-    return pathname === ROUTES.home
-      ? "bg-gradient-to-r from-[#D0D4EF] to-[#FCFCFC]"
-      : "";
-  };
   return (
     <Routes location={previousLocation ?? location}>
       {/* PUBLIC ONLY ROUTES */}s
@@ -38,9 +33,7 @@ export const Router = () => {
       {userState === "loggedIn" && (
         <>
           <Route
-            element={
-              <Layout className={getLayoutClassName(location.pathname)} />
-            }
+            element={<Layout isHome={location.pathname === ROUTES.home} />}
           >
             <Route element={<Home />} path={ROUTES.home} />
             <Route element={<MultiStepForm />} path={ROUTES.multiStepForm} />

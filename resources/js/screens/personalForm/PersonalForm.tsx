@@ -3,13 +3,16 @@ import { UserIcon } from "~/components/icons/UserIcon";
 import { Input } from "~/components/Input";
 import { useMultiStepFormStore } from "~/stores";
 import type { SubmitHandler } from "react-hook-form";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { twMerge as tw } from "tailwind-merge";
 import { z } from "zod";
 
 import "react-international-phone/style.css";
 
-import { PhoneNumberField } from "./PhoneNumberField";
+import { useMutation } from "@tanstack/react-query";
+import { checkBenefitsEligibilityQuery } from "~/api/insurance";
+import Spinner from "~/ui/Spinner";
+import { useNavigate } from "react-router-dom";
 
 const formSchema = z.object({
   firstName: z.string().min(1, { message: "First name is required" }),
@@ -25,20 +28,19 @@ const formSchema = z.object({
   year: z.number().min(1900, { message: "Year must be after 1900" }).max(2000, {
     message: `Year must be before 2000`,
   }),
-  phoneNumber: z.string().min(1, { message: "Phone number is required" }),
+  zipCode: z.string().min(1, { message: "Zip code is required" }),
 });
 
 export type FormInputType = z.infer<typeof formSchema>;
 
 export const PersonalForm = () => {
-  const { goToNextFormStep, setMultiStepFormData, multiStepFormData } =
+  const { setMultiStepFormData, multiStepFormData, goToPreviousFormStep } =
     useMultiStepFormStore();
-
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    formState: { errors },
-    control,
+    formState: { errors, isValid },
   } = useForm<FormInputType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -47,9 +49,23 @@ export const PersonalForm = () => {
       month: multiStepFormData?.personalFormData?.dateOfBirth?.month,
       day: multiStepFormData?.personalFormData?.dateOfBirth?.day,
       year: multiStepFormData?.personalFormData?.dateOfBirth?.year,
-      phoneNumber: multiStepFormData?.personalFormData?.phoneNumber,
+      zipCode: multiStepFormData?.personalFormData?.zipCode,
     },
     mode: "onSubmit",
+  });
+
+  const { mutate: getEligibilityMutation, isPending } = useMutation({
+    mutationFn: checkBenefitsEligibilityQuery.mutation,
+    onSuccess: (response) => {
+      if (!response.is_eligible) {
+        return navigate("/discount");
+      }
+      if (response.benefit === "pharmacy") {
+        navigate("/pharmacyBenefit");
+      } else {
+        navigate("/providersList");
+      }
+    },
   });
 
   const onSubmit: SubmitHandler<FormInputType> = (data) => {
@@ -60,8 +76,14 @@ export const PersonalForm = () => {
           dateOfBirth: { month: data.month, day: data.day, year: data.year },
         },
       });
-      console.log({ data, multiStepFormData });
-      goToNextFormStep();
+      if (multiStepFormData) {
+        getEligibilityMutation({
+          firstName: "John",
+          lastName: "Doe",
+          dob: "02-12-1950",
+          memberId: "A234",
+        });
+      }
     }
   };
 
@@ -137,29 +159,32 @@ export const PersonalForm = () => {
               </div>
             </div>
 
-            <Controller
-              name="phoneNumber"
-              control={control}
-              render={({ field }) => (
-                <PhoneNumberField
-                  label="Phone"
-                  id="phoneNumber"
-                  errorMessage={errors.phoneNumber?.message}
-                  {...field}
-                />
-              )}
+            <Input
+              id="zipCode"
+              label="Zip code"
+              {...register("zipCode")}
+              errorMessage={errors.zipCode?.message}
             />
           </div>
         </div>
 
-        <div className="flex">
+        <div className="flex justify-between">
           <button
             className={tw(
-              "w-1/4 rounded-md bg-[#0B406F]  px-8 py-2 text-center text-white",
+              "w-1/4 rounded-md  border border-[#07284A] px-8 py-2 text-center text-[#07284A]",
+            )}
+            onClick={() => goToPreviousFormStep()}
+          >
+            Back
+          </button>
+          <button
+            className={tw(
+              "w-1/4 self-end  rounded-md px-8 py-2 text-center text-white",
+              isValid ? "bg-[#0B406F]" : "bg-[#6B7280]",
             )}
             type="submit"
           >
-            Next
+            {isPending ? <Spinner /> : "Submit"}
           </button>
         </div>
       </form>

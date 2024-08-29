@@ -1,8 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
-import { checkBenefitsEligibilityQuery } from "~/api/insurance";
 import { ShieldIcon } from "~/components/icons/ShieldIcon";
-import { StethoscopeIcon } from "~/components/icons/StethoscopeIcon";
 import { Input } from "~/components/Input";
 import {
   Select,
@@ -14,95 +11,70 @@ import {
   SelectValue,
 } from "~/components/Select";
 import { useMultiStepFormStore } from "~/stores";
-import Spinner from "~/ui/Spinner";
 import type { SubmitHandler } from "react-hook-form";
 import { Controller, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import { twMerge as tw } from "tailwind-merge";
 import { z } from "zod";
 
-const DIABETES_TYPES = [
-  { id: 1, value: "none", label: "None" },
-  { id: 1, value: "type-1", label: "Type 1" },
-  { id: 1, value: "type-2", label: "Type 2" },
-  { id: 1, value: "type-3", label: "Gestational" },
-];
-
-const DIABETES_MANAGEMENT = [
-  { id: 1, value: "none", label: "None" },
-  { id: 1, value: "po", label: "Pills only" },
-  { id: 1, value: "ni", label: "Non-insulin injections" },
-  { id: 1, value: "ii", label: "Insulin injections" },
-  { id: 1, value: "ip", label: "Insulin using pump therapy" },
-  { id: 1, value: "de", label: " Diet and exercise" },
-];
-
 const PLAN_TYPE = [
-  { id: 1, value: "medicare", label: "Medicare" },
-  { id: 2, value: "medicaid", label: "Medicaid" },
-  { id: 3, value: "cigna", label: "Cigna" },
-  { id: 4, value: "humana", label: "Humana" },
+  {
+    id: 1,
+    value: "medicare",
+    label: "Medicare (I have a red, white and blue card only)",
+  },
+  {
+    id: 2,
+    value: "medicare-advantage",
+    label: "Medicare Advantage (Medicare with and Advantage plan)",
+  },
+  { id: 3, value: "medicaid", label: "Medicaid" },
+  {
+    id: 4,
+    value: "private-insurance",
+    label: "Private insurance (ie UHC, BCBS, Humana, etc.)",
+  },
 ];
 
 const InsuranceFormSchema = z.object({
-  insurancePlan: z.string().min(1, { message: "Insurance plan is required" }),
-  memberId: z.string().min(1, { message: "Member Id is required" }),
-  diabetesType: z.string().min(1, { message: "Diabetes type is required" }),
-  diabetesManagement: z
-    .string()
-    .min(1, { message: "Diabetes management is required" }),
+  insuranceType: z.string().min(1, { message: "Insurance plan is required" }),
+  insuranceProvider: z.string().optional(),
+  rxNumber: z.string().optional(),
+  binNumber: z.string().optional(),
 });
 
 export type InsuranceFormInputType = z.infer<typeof InsuranceFormSchema>;
 
 export const InsuranceForm = () => {
-  const { goToPreviousFormStep, setMultiStepFormData, multiStepFormData } =
-    useMultiStepFormStore();
-  const navigate = useNavigate();
+  const {
+    goToPreviousFormStep,
+    setMultiStepFormData,
+    multiStepFormData,
+    goToNextFormStep,
+  } = useMultiStepFormStore();
 
   const {
-    register,
     handleSubmit,
-    formState: { isValid, errors },
     control,
+    register,
+    formState: { errors },
+    watch,
   } = useForm<InsuranceFormInputType>({
     resolver: zodResolver(InsuranceFormSchema),
     defaultValues: {
-      insurancePlan: multiStepFormData?.insuranceFormData?.insurancePlan,
-      memberId: multiStepFormData?.insuranceFormData?.memberId,
-      diabetesType: multiStepFormData?.insuranceFormData?.diabetesType,
-      diabetesManagement:
-        multiStepFormData?.insuranceFormData?.diabetesManagement,
+      insuranceType: multiStepFormData?.insuranceFormData?.insuranceType,
+      insuranceProvider:
+        multiStepFormData?.insuranceFormData?.insuranceProvider,
+      rxNumber: multiStepFormData?.insuranceFormData?.rxNumber,
+      binNumber: multiStepFormData?.insuranceFormData?.binNumber,
     },
     mode: "onSubmit",
   });
 
-  const { mutate: getEligibilityMutation, isPending } = useMutation({
-    mutationFn: checkBenefitsEligibilityQuery.mutation,
-    onSuccess: (response) => {
-      if (!response.is_eligible) {
-        return navigate("/discount");
-      }
-      if (response.benefit === "pharmacy") {
-        navigate("/pharmacyBenefit");
-      } else {
-        navigate("/providersList");
-      }
-    },
-  });
-
   const onSubmit: SubmitHandler<InsuranceFormInputType> = (data) => {
     setMultiStepFormData({ insuranceFormData: data });
-    if (multiStepFormData) {
-      getEligibilityMutation({
-        firstName: "John",
-        lastName: "Doe",
-        dob: "02-12-1950",
-        memberId: "A234",
-      });
-    }
+    goToNextFormStep();
   };
-
+  const isPrivateInsurance = watch("insuranceType") === "private-insurance";
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-between">
@@ -118,15 +90,15 @@ export const InsuranceForm = () => {
         <div className="flex justify-between gap-4">
           <Controller
             control={control}
-            name="insurancePlan"
+            name="insuranceType"
             render={({ field }) => (
               <SelectGroup className="w-full">
                 <SelectLabel className=" font-semibold">
-                  Plan name/type
+                  Insurance type
                 </SelectLabel>
-                <Select>
+                <Select onValueChange={field.onChange}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select plan" />
+                    <SelectValue placeholder="Select your insurance type" />
                   </SelectTrigger>
                   <SelectContent>
                     {PLAN_TYPE.map(({ id, label, value }) => {
@@ -145,90 +117,56 @@ export const InsuranceForm = () => {
               </SelectGroup>
             )}
           />
-          <Input
-            id="memberId"
-            label="Member ID"
-            {...register("memberId")}
-            errorMessage={errors.memberId?.message}
-          />
         </div>
-        <div className="flex flex-col gap-3">
-          <div className="flex justify-between">
-            <div className="flex items-center gap-2 ">
-              <StethoscopeIcon />
-              <p className=" font-extrabold">Medical information</p>
+        {isPrivateInsurance && (
+          <div>
+            <Controller
+              control={control}
+              name="insuranceProvider"
+              render={({ field }) => (
+                <SelectGroup className="w-full">
+                  <SelectLabel className=" font-semibold">
+                    Insurance provider
+                  </SelectLabel>
+                  <Select onValueChange={field.onChange}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select your insurance provider" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {PLAN_TYPE.map(({ id, label, value }) => {
+                        return (
+                          <SelectItem
+                            {...field}
+                            key={`${id}${value}`}
+                            value={value}
+                          >
+                            {label}
+                          </SelectItem>
+                        );
+                      })}
+                    </SelectContent>
+                  </Select>
+                </SelectGroup>
+              )}
+            />
+            <div className="flex gap-6">
+              <Input
+                id="rxNumber"
+                label="RX Number"
+                {...register("rxNumber")}
+                errorMessage={errors.rxNumber?.message}
+                className="w-1/2"
+              />
+              <Input
+                id="binNumber"
+                label="BIN Number"
+                {...register("binNumber")}
+                errorMessage={errors.binNumber?.message}
+                className="w-1/2"
+              />
             </div>
-            <p className="text-sm font-extrabold text-[#6B7280]">
-              All fields are required
-            </p>
           </div>
-          <div className="flex justify-between gap-4">
-            <Controller
-              control={control}
-              name="diabetesType"
-              render={({ field }) => (
-                <SelectGroup className="w-full">
-                  <SelectLabel className="mb-1 font-semibold">
-                    Diabetes type
-                  </SelectLabel>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select diabetes type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {DIABETES_TYPES.map(({ id, label, value }) => {
-                        return (
-                          <SelectItem
-                            {...field}
-                            key={`${id}${value}`}
-                            value={value}
-                          >
-                            {label}
-                          </SelectItem>
-                        );
-                      })}
-                    </SelectContent>
-                  </Select>
-                </SelectGroup>
-              )}
-            />
-            <Controller
-              control={control}
-              name="diabetesManagement"
-              render={({ field }) => (
-                <SelectGroup className="w-full">
-                  <SelectLabel className="mb-1 font-semibold">
-                    Current Diabetes management
-                  </SelectLabel>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select diabetes management" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {DIABETES_MANAGEMENT.map(({ id, label, value }) => {
-                        return (
-                          <SelectItem
-                            {...field}
-                            key={`${id}${value}`}
-                            value={value}
-                          >
-                            {label}
-                          </SelectItem>
-                        );
-                      })}
-                    </SelectContent>
-                  </Select>
-                </SelectGroup>
-              )}
-            />
-          </div>
-        </div>
-        <p className="text-sm text-[#6B7280]">
-          By continuing, you agree with the{" "}
-          <a href="google.com" className="underline">
-            Terms & Conditions
-          </a>
-        </p>
+        )}
         <div className="flex justify-between">
           <button
             className={tw(
@@ -240,12 +178,14 @@ export const InsuranceForm = () => {
           </button>
           <button
             className={tw(
-              "w-1/4 rounded-md  px-8 py-2 text-center text-white",
-              isValid ? "bg-[#0B406F]" : "bg-[#6B7280]",
+              "w-1/4 rounded-md bg-[#0B406F]  px-8 py-2 text-center text-white",
             )}
             type="submit"
+            onClick={() => {
+              console.log(errors);
+            }}
           >
-            {isPending ? <Spinner /> : "Submit"}
+            Next
           </button>
         </div>
       </form>
