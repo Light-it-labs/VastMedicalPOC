@@ -184,7 +184,7 @@ export const AddressForm = () => {
           </button>
           <button
             className={tw(
-              "w-1/4 rounded-md  px-8 py-2 text-center text-white",
+              "text-white w-1/4  rounded-md px-8 py-2 text-center",
               isValid ? "bg-[#0B406F]" : "bg-[#6B7280]",
             )}
             type="submit"

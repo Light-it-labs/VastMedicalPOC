@@ -27,6 +27,20 @@ module.exports = {
     fontFamily: {
       sans: ["Inter", "sans-serif"],
     },
+    colors: {
+      "blue": {
+        "lighter": "#0C8FEB",
+        "light": "#001489",
+        DEFAULT: '#07284A',
+        "dark": "#051E38",
+      },
+      "freestyle-libre": { "red": "#D54115" },
+      "warning": {
+        50:"#FFF8ED",
+        200:"#FFDCA9",
+        900: "#9B3B11"
+      },
+    },
     screens: {
       // These are the default media queries.
       // We're declaring them to make it easier to import and use in react for js checks

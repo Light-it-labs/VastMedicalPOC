@@ -1,5 +1,6 @@
 import { Layout } from "~/layout";
 import { Home, Login, NotFound } from "~/screens";
+import { CouponBenefit } from "~/screens/CouponBenefit";
 import MultipleChoiceForm from "~/screens/MultipleChoiceForm";
 import MultiStepForm from "~/screens/MultiStepForm";
 import { PharmacyBenefit } from "~/screens/PharmacyBenefit";
@@ -45,6 +46,7 @@ export const Router = () => {
               element={<PharmacyBenefit />}
               path={ROUTES.pharmacyBenefit}
             />
+            <Route element={<CouponBenefit />} path={ROUTES.couponBenefit} />
             <Route element={<ProvidersList />} path={ROUTES.providersList} />
           </Route>
           <Route path="*" element={<NotFound />} />

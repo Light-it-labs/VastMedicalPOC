@@ -122,7 +122,7 @@ const SelectItem = React.forwardRef<
   <SelectPrimitive.Item
     ref={ref}
     className={tw(
-      "relative flex w-full cursor-default select-none items-center rounded-md bg-white py-2 pl-3 pr-8 text-sm outline-none hover:bg-blue-500 hover:text-white",
+      "bg-white hover:bg-blue-500 hover:text-white relative flex w-full cursor-default select-none items-center rounded-md py-2 pl-3 pr-8 text-sm outline-none",
       "focus:bg-blue-500 focus:text-white", // Ensuring focus state is also styled
       "disabled:pointer-events-none disabled:opacity-50", // Handling disabled state if needed
       className,
@@ -132,7 +132,7 @@ const SelectItem = React.forwardRef<
     <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
     <span className="absolute right-2 flex h-3.5 w-3.5 items-center justify-center">
       <SelectPrimitive.ItemIndicator>
-        <CheckIcon className="h-4 w-4 text-white" />{" "}
+        <CheckIcon className="text-white h-4 w-4" />{" "}
         {/* Ensure the icon is visible on hover/focus */}
       </SelectPrimitive.ItemIndicator>
     </span>

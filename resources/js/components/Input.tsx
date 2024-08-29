@@ -17,7 +17,7 @@ export const Input = forwardRef<HTMLInputElement, InputPropTypes>(
         <input
           placeholder={placeholder}
           className={tw(
-            "rounded-lg border bg-white p-4 no-spinners",
+            "bg-white rounded-lg border p-4 no-spinners",
             errorMessage && "border-red-600",
           )}
           id={id}
