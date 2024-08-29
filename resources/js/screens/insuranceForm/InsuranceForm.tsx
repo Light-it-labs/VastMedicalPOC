@@ -15,6 +15,7 @@ import type { SubmitHandler } from "react-hook-form";
 import { Controller, useForm } from "react-hook-form";
 import { twMerge as tw } from "tailwind-merge";
 import { z } from "zod";
+import { Button } from "~/components/Button";
 
 const PLAN_TYPE = [
   {
@@ -127,8 +128,7 @@ export const InsuranceForm = () => {
       <form
         onSubmit={handleSubmit(onSubmit)}
         className={tw(
-          "flex flex-col gap-12",
-          isPrivateInsurance ? "gap-12" : "gap-72",
+          "flex flex-col gap-4",
         )}
       >
         <div className="flex justify-between gap-4">
@@ -162,72 +162,69 @@ export const InsuranceForm = () => {
             )}
           />
         </div>
-        {isPrivateInsurance && (
-          <div>
-            <Controller
-              control={control}
-              name="insuranceProvider"
-              render={({ field }) => (
-                <SelectGroup className="w-full">
-                  <SelectLabel className=" font-semibold">
-                    Insurance provider
-                  </SelectLabel>
-                  <Select {...field} onValueChange={field.onChange}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select your insurance provider" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {INSURANCE_PROVIDER.map(({ id, label, value }) => {
-                        return (
-                          <SelectItem key={`${id}${value}`} value={value}>
-                            {label}
-                          </SelectItem>
-                        );
-                      })}
-                    </SelectContent>
-                  </Select>
-                </SelectGroup>
-              )}
+        <div className={tw("flex flex-col gap-4", !isPrivateInsurance && "opacity-0 pointer-events-none")}>
+          <Controller
+            control={control}
+            name="insuranceProvider"
+            render={({ field }) => (
+              <SelectGroup className="w-full">
+                <SelectLabel className=" font-semibold">
+                  Insurance provider
+                </SelectLabel>
+                <Select {...field} onValueChange={field.onChange}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select your insurance provider" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {INSURANCE_PROVIDER.map(({ id, label, value }) => {
+                      return (
+                        <SelectItem key={`${id}${value}`} value={value}>
+                          {label}
+                        </SelectItem>
+                      );
+                    })}
+                  </SelectContent>
+                </Select>
+              </SelectGroup>
+            )}
+          />
+          <div className="flex gap-6">
+            <Input
+              id="rxNumber"
+              label="RX Number"
+              {...register("rxNumber")}
+              errorMessage={errors.rxNumber?.message}
+              className="w-1/2"
             />
-            <div className="flex gap-6">
-              <Input
-                id="rxNumber"
-                label="RX Number"
-                {...register("rxNumber")}
-                errorMessage={errors.rxNumber?.message}
-                className="w-1/2"
-              />
-              <Input
-                id="binNumber"
-                label="BIN Number"
-                {...register("binNumber")}
-                errorMessage={errors.binNumber?.message}
-                className="w-1/2"
-              />
-            </div>
+            <Input
+              id="binNumber"
+              label="BIN Number"
+              {...register("binNumber")}
+              errorMessage={errors.binNumber?.message}
+              className="w-1/2"
+            />
           </div>
-        )}
+        </div>
         <div className="flex justify-between">
-          <button
+          <Button
+            variant="secondary"
             className={tw(
-              "w-1/4 rounded-md  border border-[#07284A] px-8 py-2 text-center text-[#07284A]",
+              "w-1/4",
             )}
             onClick={() => goToPreviousFormStep()}
           >
             Back
-          </button>
-          <button
+          </Button>
+          <Button
+            variant="primary"
+            disabled={!isValid}
             className={tw(
-              "w-1/4 rounded-md   px-8 py-2 text-center text-white",
-              isValid ? "bg-[#0B406F]" : "bg-[#6B7280]",
+              "w-1/4",
             )}
             type="submit"
-            onClick={() => {
-              console.log(errors);
-            }}
           >
             Next
-          </button>
+          </Button>
         </div>
       </form>
     </div>

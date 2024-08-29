@@ -18,7 +18,7 @@ export const CouponBenefit = () => {
           to get your sensor with a discounted price.
         </p>
       </div>
-      <div className="m-auto flex w-5/6 flex-col gap-8">
+      <div className="mx-auto flex w-5/6 flex-col gap-8">
         <div className="flex justify-center gap-8">
           <div className="flex max-w-sm flex-col items-center justify-start gap-4 overflow-hidden rounded-2xl border-2 border-[#F0F7FF] bg-[white] pb-8">
             <div className="w-full rounded-bl-3xl bg-[#F0F7FF] px-8 py-4">

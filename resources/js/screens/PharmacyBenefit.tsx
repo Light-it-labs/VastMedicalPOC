@@ -95,7 +95,7 @@ export const PharmacyBenefit = () => {
               <p className="text-[#6B7280]">{productName}</p>
             </div>
             <p className="text-[#051E38] ">
-              Show this coupon at the
+              Show this coupon at the{" "}
               <b>{pharmacyName}</b> Pharmacy.
             </p>
             <div className="flex items-center gap-2">
