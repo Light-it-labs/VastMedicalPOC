@@ -24,7 +24,7 @@ module.exports = {
     },
   ],
   theme: {
-    fontFamily: {
+      fontFamily: {
       sans: ["Inter", "sans-serif"],
     },
     screens: {
@@ -37,6 +37,20 @@ module.exports = {
       "2xl": "1536px",
     },
     extend: {
+      colors: {
+        "blue": {
+          "lighter": "#0C8FEB",
+          "light": "#001489",
+          DEFAULT: '#07284A',
+          "dark": "#051E38",
+        },
+        "freestyle-libre": { "red": "#D54115" },
+        "warning": {
+          50:"#FFF8ED",
+          200:"#FFDCA9",
+          900: "#9B3B11"
+        },
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },

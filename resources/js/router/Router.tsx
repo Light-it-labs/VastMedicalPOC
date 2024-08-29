@@ -1,6 +1,6 @@
 import { Layout } from "~/layout";
 import { Home, Login, NotFound } from "~/screens";
-import MultipleChoiceForm from "~/screens/MultipleChoiceForm";
+import { CouponBenefit } from "~/screens/CouponBenefit";
 import MultiStepForm from "~/screens/MultiStepForm";
 import { PharmacyBenefit } from "~/screens/PharmacyBenefit";
 import { ProvidersList } from "~/screens/ProvidersList";
@@ -20,11 +20,6 @@ export const Router = () => {
     state.token ? "loggedIn" : "loggedOut",
   );
 
-  const getLayoutClassName = (pathname: string) => {
-    return pathname === ROUTES.home
-      ? "bg-gradient-to-r from-[#D0D4EF] to-[#FCFCFC]"
-      : "";
-  };
   return (
     <Routes location={previousLocation ?? location}>
       {/* PUBLIC ONLY ROUTES */}s
@@ -38,20 +33,15 @@ export const Router = () => {
       {userState === "loggedIn" && (
         <>
           <Route
-            element={
-              <Layout className={getLayoutClassName(location.pathname)} />
-            }
+            element={<Layout isHome={location.pathname === ROUTES.home} />}
           >
             <Route element={<Home />} path={ROUTES.home} />
             <Route element={<MultiStepForm />} path={ROUTES.multiStepForm} />
             <Route
-              element={<MultipleChoiceForm />}
-              path={ROUTES.multipleChoiceForm}
-            />
-            <Route
               element={<PharmacyBenefit />}
               path={ROUTES.pharmacyBenefit}
             />
+            <Route element={<CouponBenefit />} path={ROUTES.couponBenefit} />
             <Route element={<ProvidersList />} path={ROUTES.providersList} />
           </Route>
           <Route path="*" element={<NotFound />} />

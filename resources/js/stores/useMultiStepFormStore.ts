@@ -1,12 +1,11 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
 
 export interface MultiStepFormData {
   personalFormData?: {
     firstName: string;
     lastName: string;
     dateOfBirth: { month: number; day: number; year: number };
-    phoneNumber: string;
+    zipCode: string;
   };
   addressFormData?: {
     street: string;
@@ -15,10 +14,14 @@ export interface MultiStepFormData {
     zipCode: string;
   };
   insuranceFormData?: {
-    insurancePlan: string;
-    memberId: string;
+    insuranceType: string;
+    insuranceProvider?: string;
+    rxNumber?: string;
+    binNumber?: string;
+  };
+  medicalInformationFormData?: {
     diabetesType: string;
-    diabetesManagement: string;
+    diabetesTreatment: string;
   };
 }
 
@@ -30,32 +33,25 @@ export interface MultiStepFormState {
   setMultiStepFormData(multiStepFormData: MultiStepFormData): void;
 }
 
-export const useMultiStepFormStore = create<MultiStepFormState>()(
-  persist(
-    (set) => ({
-      currentFormStep: 1,
-      multiStepFormData: undefined,
-      goToNextFormStep: () => {
-        set(({ currentFormStep }) => ({
-          currentFormStep: currentFormStep + 1,
-        }));
+export const useMultiStepFormStore = create<MultiStepFormState>()((set) => ({
+  currentFormStep: 1,
+  multiStepFormData: undefined,
+  goToNextFormStep: () => {
+    set(({ currentFormStep }) => ({
+      currentFormStep: currentFormStep + 1,
+    }));
+  },
+  goToPreviousFormStep: () => {
+    set(({ currentFormStep }) => ({
+      currentFormStep: currentFormStep - 1,
+    }));
+  },
+  setMultiStepFormData: (update: Partial<MultiStepFormData>) => {
+    set((prevState) => ({
+      multiStepFormData: {
+        ...prevState.multiStepFormData,
+        ...update,
       },
-      goToPreviousFormStep: () => {
-        set(({ currentFormStep }) => ({
-          currentFormStep: currentFormStep - 1,
-        }));
-      },
-      setMultiStepFormData: (update: Partial<MultiStepFormData>) => {
-        set((prevState) => ({
-          multiStepFormData: {
-            ...prevState.multiStepFormData,
-            ...update,
-          },
-        }));
-      },
-    }),
-    {
-      name: "multiStepFormStore",
-    },
-  ),
-);
+    }));
+  },
+}));
