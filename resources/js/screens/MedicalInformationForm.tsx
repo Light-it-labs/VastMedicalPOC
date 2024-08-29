@@ -24,8 +24,8 @@ const DIABETES_TYPES = [
 
 const DIABETES_MANAGEMENT = [
   { id: 1, value: "none", label: "None" },
-  { id: 1, value: "po", label: "Pills only" },
-  { id: 1, value: "mi", label: "Multiple insulin injections" },
+  { id: 1, value: "po", label: "Daily insulin injection" },
+  { id: 1, value: "mi", label: "Multiple daily insulin injections" },
   { id: 1, value: "pt", label: "Insulin using pump therapy" },
   { id: 1, value: "om", label: "Oral medication" },
 ];
