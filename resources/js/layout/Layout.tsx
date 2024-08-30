@@ -19,7 +19,7 @@ export const Layout = ({ isHome }: { isHome: boolean }) => {
           <LibreHeaderLogo className="w-40 cursor-pointer" />
         </a>
         <a href="/">
-          <HeaderLogo className="w-20 cursor-pointer" />
+          <HeaderLogo className="w-24 cursor-pointer" />
         </a>
       </header>
       <main
