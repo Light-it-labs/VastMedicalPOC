@@ -11,8 +11,8 @@ import "react-international-phone/style.css";
 
 import { useMutation } from "@tanstack/react-query";
 import { checkBenefitsEligibilityQuery } from "~/api/insurance";
-import { useNavigate } from "react-router-dom";
 import { Button } from "~/components/Button";
+import { useNavigate } from "react-router-dom";
 
 const formSchema = z.object({
   firstName: z.string().min(1, { message: "First name is required" }),
@@ -112,8 +112,8 @@ export const PersonalForm = () => {
           </div>
           <div>
             <p className="italic">Date of birth</p>
-            <div className="grid justify-between gap-4 grid-cols-2">
-              <div className="grid gap-2 grid-cols-4">
+            <div className="grid grid-cols-2 justify-between gap-4">
+              <div className="grid grid-cols-4 gap-2">
                 <Input
                   id="month"
                   label="Month"
@@ -180,8 +180,7 @@ export const PersonalForm = () => {
             variant="primary"
             disabled={!isValid}
             isLoading={isPending}
-            className={tw(
-              "w-1/4")}
+            className={tw("w-1/4")}
             type="submit"
             onClick={() => {
               console.log({ multiStepFormData });

@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "~/components/Button";
 import { StethoscopeIcon } from "~/components/icons/StethoscopeIcon";
 import {
   Select,
@@ -14,7 +15,6 @@ import type { SubmitHandler } from "react-hook-form";
 import { Controller, useForm } from "react-hook-form";
 import { twMerge as tw } from "tailwind-merge";
 import { z } from "zod";
-import { Button } from "~/components/Button";
 
 const DIABETES_TYPES = [
   { id: 1, value: "none", label: "None" },
@@ -67,7 +67,10 @@ export const MedicalInformationForm = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8 justify-between h-full pb-12">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex h-full flex-col justify-between gap-8 pb-12"
+      >
         <div className="flex flex-col gap-8">
           <div className="flex justify-between">
             <div className="flex items-center gap-2 ">

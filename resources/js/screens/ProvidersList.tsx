@@ -108,7 +108,7 @@ export const ProvidersList = () => {
       <div className="flex flex-col gap-12 text-center">
         <h1 className="pt-8  text-3xl text-[#07284A]">
           Your <b className="text-[#0C8FEB]">Freestyle Libre CGM System</b> is
-          covered by your Medical Benefit.
+          covered as a Medical Benefit.
         </h1>
         <p className="text-[#07284A]">
           Great news! Here is a list of Durable Medical Equipment (DME)
