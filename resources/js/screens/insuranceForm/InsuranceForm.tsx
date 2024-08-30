@@ -229,7 +229,7 @@ export const InsuranceForm = () => {
             <div className="flex gap-6">
               <Input
                 id="rxNumber"
-                label="RX Number"
+                label="PCN Number"
                 {...register("rxNumber")}
                 errorMessage={errors.rxNumber?.message}
                 className="w-1/2"
