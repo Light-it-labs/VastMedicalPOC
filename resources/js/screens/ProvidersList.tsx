@@ -56,12 +56,12 @@ const medicareDmeProviders: Record<
     {
       id: 7,
       name: "Byram Healthcare/Apria",
-      email: "Byram Healthcare/Apria",
-      phoneNumber: "Byram Healthcare/Apria",
+      email: "abbottreferrals@byramhealthcare.com",
+      phoneNumber: "800-974-2055",
     },
     {
       id: 8,
-      name: "Byram Healthcare/Apria",
+      name: "J&B Medical Supply",
       email: "providerservices@jandbmedical.com",
       phoneNumber: "800-737-0045",
     },
@@ -87,7 +87,7 @@ const medicareDmeProviders: Record<
       id: 12,
       name: "Mini Pharmacy",
       email: "info@minipharmacy.com",
-      phoneNumber: "info@minipharmacy.com",
+      phoneNumber: "888-670-1120",
     },
   ],
   ["private-insurance"]: [
