@@ -1,13 +1,19 @@
 import React from "react";
-import { twMerge as tw } from "tailwind-merge";
 import Spinner from "~/ui/Spinner";
+import { twMerge as tw } from "tailwind-merge";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant: "primary" | "secondary";
   isLoading?: boolean;
 }
 
-const Button = ({ className, children, variant, isLoading = false, ...otherProps }: ButtonProps) => {
+const Button = ({
+  className,
+  children,
+  variant,
+  isLoading = false,
+  ...otherProps
+}: ButtonProps) => {
   const getClasses = () => {
     switch (variant) {
       case "primary":
@@ -17,11 +23,11 @@ const Button = ({ className, children, variant, isLoading = false, ...otherProps
       default:
         return "";
     }
-  }
+  };
   return (
     <button
       className={tw(
-        "rounded-md border-2  px-8 py-2 text-center font-bold transition-all disabled:border-[#6B7280] disabled:bg-[#6B7280] disabled:text-white disabled:font-bold",
+        "rounded-md border-2  px-8 py-2 text-center font-bold transition-all disabled:border-[#6B7280] disabled:bg-[#6B7280] disabled:font-bold disabled:text-white",
         getClasses(),
         className,
       )}

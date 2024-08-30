@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "~/components/Button";
 import { ShieldIcon } from "~/components/icons/ShieldIcon";
 import { Input } from "~/components/Input";
 import {
@@ -15,7 +16,6 @@ import type { SubmitHandler } from "react-hook-form";
 import { Controller, useForm } from "react-hook-form";
 import { twMerge as tw } from "tailwind-merge";
 import { z } from "zod";
-import { Button } from "~/components/Button";
 
 const PLAN_TYPE = [
   {
@@ -127,9 +127,7 @@ export const InsuranceForm = () => {
       </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className={tw(
-          "flex flex-col gap-4",
-        )}
+        className={tw("flex flex-col gap-4")}
       >
         <div className="flex justify-between gap-4">
           <Controller
@@ -162,7 +160,12 @@ export const InsuranceForm = () => {
             )}
           />
         </div>
-        <div className={tw("flex flex-col gap-4", !isPrivateInsurance && "opacity-0 pointer-events-none")}>
+        <div
+          className={tw(
+            "flex flex-col gap-4",
+            !isPrivateInsurance && "pointer-events-none opacity-0",
+          )}
+        >
           <Controller
             control={control}
             name="insuranceProvider"
@@ -208,9 +211,7 @@ export const InsuranceForm = () => {
         <div className="flex justify-between">
           <Button
             variant="secondary"
-            className={tw(
-              "w-1/4",
-            )}
+            className={tw("w-1/4")}
             onClick={() => goToPreviousFormStep()}
           >
             Back
@@ -218,9 +219,7 @@ export const InsuranceForm = () => {
           <Button
             variant="primary"
             disabled={!isValid}
-            className={tw(
-              "w-1/4",
-            )}
+            className={tw("w-1/4")}
             type="submit"
           >
             Next

@@ -49,8 +49,8 @@ export const PharmacyBenefit = () => {
     <div className="mx-auto flex w-3/4 flex-col gap-12">
       <div className="flex flex-col gap-12 text-center">
         <h1 className="pt-8  text-3xl text-[#07284A]">
-          Your <b className="text-[#0C8FEB]">Freestyle Libre CGM System</b>{" "}
-          classifies as a Pharmacy benefit.
+          Your <b className="text-[#0C8FEB]">Freestyle Libre CGM System</b> is
+          covered as a Pharmacy benefit.
         </h1>
         <p className="text-[#07284A]">
           You can pick it up at any of the following pharmacies:
@@ -95,8 +95,7 @@ export const PharmacyBenefit = () => {
               <p className="text-[#6B7280]">{productName}</p>
             </div>
             <p className="text-[#051E38] ">
-              Show this coupon at the{" "}
-              <b>{pharmacyName}</b> Pharmacy.
+              Show this coupon at the <b>{pharmacyName}</b> Pharmacy.
             </p>
             <div className="flex items-center gap-2">
               <MapPinIcon className="h-4 w-4" />
