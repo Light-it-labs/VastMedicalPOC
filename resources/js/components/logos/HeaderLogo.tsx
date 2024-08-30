@@ -3,6 +3,8 @@ import type { IconProps } from "~/utils/types";
 export const HeaderLogo = ({ className }: IconProps) => (
   <svg
     className={className}
+    width="61"
+    height="28"
     viewBox="0 0 61 28"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
