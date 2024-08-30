@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Vast Medical</title>
+    <title>Vast Medical Holdings</title>
 
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16" />
