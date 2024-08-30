@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "~/components/Button";
 import { ShieldIcon } from "~/components/icons/ShieldIcon";
@@ -12,6 +13,7 @@ import {
   SelectValue,
 } from "~/components/Select";
 import { useMultiStepFormStore } from "~/stores";
+import Spinner from "~/ui/Spinner";
 import type { SubmitHandler } from "react-hook-form";
 import { Controller, useForm } from "react-hook-form";
 import { twMerge as tw } from "tailwind-merge";
@@ -74,6 +76,10 @@ export type PrivateInsuranceFormInputType = z.infer<
 >;
 
 export const InsuranceForm = () => {
+  const [showPrivateInsuranceFields, setShowPrivateInsuranceFields] =
+    useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const {
     goToPreviousFormStep,
     setMultiStepFormData,
@@ -107,13 +113,31 @@ export const InsuranceForm = () => {
     mode: "onSubmit",
   });
 
+  const insuranceType = watch("insuranceType");
+
+  useEffect(() => {
+    if (insuranceType === "private-insurance") {
+      setIsLoading(true);
+      setShowPrivateInsuranceFields(false);
+      const timer = setTimeout(() => {
+        setIsLoading(false);
+        setShowPrivateInsuranceFields(true);
+      }, 1000);
+
+      return () => clearTimeout(timer);
+    } else {
+      setIsLoading(false);
+      setShowPrivateInsuranceFields(false);
+    }
+  }, [insuranceType]);
+
   const onSubmit: SubmitHandler<
     InsuranceFormInputType | PrivateInsuranceFormInputType
   > = (data) => {
     setMultiStepFormData({ insuranceFormData: data });
     goToNextFormStep();
   };
-  const isPrivateInsurance = watch("insuranceType") === "private-insurance";
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-between">
@@ -160,54 +184,66 @@ export const InsuranceForm = () => {
             )}
           />
         </div>
-        <div
-          className={tw(
-            "flex flex-col gap-4",
-            !isPrivateInsurance && "pointer-events-none opacity-0",
-          )}
-        >
-          <Controller
-            control={control}
-            name="insuranceProvider"
-            render={({ field }) => (
-              <SelectGroup className="w-full">
-                <SelectLabel className=" font-semibold">
-                  Insurance provider
-                </SelectLabel>
-                <Select {...field} onValueChange={field.onChange}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select your insurance provider" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {INSURANCE_PROVIDER.map(({ id, label, value }) => {
-                      return (
-                        <SelectItem key={`${id}${value}`} value={value}>
-                          {label}
-                        </SelectItem>
-                      );
-                    })}
-                  </SelectContent>
-                </Select>
-              </SelectGroup>
-            )}
+        {isLoading && (
+          <Spinner
+            className="h-32 w-32 text-[#0B406F] "
+            containerClassName="w-full h-48 flex justify-center"
           />
-          <div className="flex gap-6">
-            <Input
-              id="rxNumber"
-              label="RX Number"
-              {...register("rxNumber")}
-              errorMessage={errors.rxNumber?.message}
-              className="w-1/2"
+        )}
+        {!isLoading && !showPrivateInsuranceFields && (
+          <div className="h-48 w-full"></div>
+        )}
+
+        {showPrivateInsuranceFields && (
+          <div
+            className={tw(
+              "flex flex-col gap-4",
+              !showPrivateInsuranceFields && "pointer-events-none opacity-0",
+            )}
+          >
+            <Controller
+              control={control}
+              name="insuranceProvider"
+              render={({ field }) => (
+                <SelectGroup className="w-full">
+                  <SelectLabel className=" font-semibold">
+                    Insurance provider
+                  </SelectLabel>
+                  <Select {...field} onValueChange={field.onChange}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select your insurance provider" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {INSURANCE_PROVIDER.map(({ id, label, value }) => {
+                        return (
+                          <SelectItem key={`${id}${value}`} value={value}>
+                            {label}
+                          </SelectItem>
+                        );
+                      })}
+                    </SelectContent>
+                  </Select>
+                </SelectGroup>
+              )}
             />
-            <Input
-              id="binNumber"
-              label="BIN Number"
-              {...register("binNumber")}
-              errorMessage={errors.binNumber?.message}
-              className="w-1/2"
-            />
+            <div className="flex gap-6">
+              <Input
+                id="rxNumber"
+                label="RX Number"
+                {...register("rxNumber")}
+                errorMessage={errors.rxNumber?.message}
+                className="w-1/2"
+              />
+              <Input
+                id="binNumber"
+                label="BIN Number"
+                {...register("binNumber")}
+                errorMessage={errors.binNumber?.message}
+                className="w-1/2"
+              />
+            </div>
           </div>
-        </div>
+        )}
         <div className="flex justify-between">
           <Button
             variant="secondary"

@@ -1,7 +1,7 @@
+import { Button } from "~/components/Button";
 import { Link } from "react-router-dom";
 
 import FreestyleLibre from "./freestyle.png";
-import { Button } from "~/components/Button";
 
 export const Home = () => {
   return (
