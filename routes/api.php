@@ -9,6 +9,7 @@ use Lightit\Backoffice\Users\App\Controllers\StoreUserController;
 use Lightit\Insurance\App\Controllers\GetAvailableDMEProvidersController;
 use Lightit\Insurance\App\Controllers\MedicareAdvantageEligibilityCheckController;
 use Lightit\Insurance\App\Controllers\MedicareEligibilityCheckController;
+use Lightit\Insurance\App\Controllers\PharmacyBenefitCheckController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,3 +44,4 @@ Route::post('/medicare/eligibility-check', MedicareEligibilityCheckController::c
 Route::post('/medicare-advantage/eligibility-check', MedicareAdvantageEligibilityCheckController::class);
 
 Route::get('/dme/providers', GetAvailableDMEProvidersController::class);
+Route::get('/pharmacy-benefit-check', PharmacyBenefitCheckController::class);
