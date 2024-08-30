@@ -1,5 +1,5 @@
+import { HeaderLogo } from "~/components/logos/HeaderLogo";
 import { LibreHeaderLogo } from "~/components/logos/LibreHeaderLogo";
-import { VmgHeaderLogo } from "~/components/logos/VmgHeaderLogo";
 import { useOutlet } from "react-router-dom";
 import { twMerge as tw } from "tailwind-merge";
 
@@ -19,7 +19,7 @@ export const Layout = ({ isHome }: { isHome: boolean }) => {
           <LibreHeaderLogo className="w-40 cursor-pointer" />
         </a>
         <a href="/">
-          <VmgHeaderLogo className="w-20 cursor-pointer" />
+          <HeaderLogo className="w-20 cursor-pointer" />
         </a>
       </header>
       <main
