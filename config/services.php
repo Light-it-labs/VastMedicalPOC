@@ -39,6 +39,9 @@ return [
         'base_url' => env('PVERIFY_BASE_URL'),
         'client_api_id' => env('PVERIFY_CLIENT_API_ID'),
         'client_secret' => env('PVERIFY_CLIENT_SECRET'),
+        'sleep_seconds' => env('PVERIFY_SLEEP_SECONDS'),
+        'provider_npi' => env('PVERIFY_PROVIDER_NPI'),
+        'provider_last_name' => env('PVERIFY_PROVIDER_LAST_NAME'),
     ],
 
     'dosespot' => [

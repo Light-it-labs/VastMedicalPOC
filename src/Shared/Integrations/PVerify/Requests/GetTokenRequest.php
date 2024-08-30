@@ -11,7 +11,7 @@ use Saloon\Http\Request;
 use Saloon\Traits\Body\HasFormBody;
 use Saloon\Traits\Request\HasConnector;
 
-class GetToken extends Request implements HasBody
+class GetTokenRequest extends Request implements HasBody
 {
     use HasFormBody;
     use HasConnector;

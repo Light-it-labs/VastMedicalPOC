@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Lightit\Insurance\Domain\Actions;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use Lightit\Insurance\Domain\DataTransferObjects\MedicareAdvantageEligibilityCheckDto;
 use Lightit\Insurance\Domain\DataTransferObjects\MedicareAdvantageEligibilityResponseDto;
+use Lightit\Shared\Integrations\PVerify\DataTransferObjects\EligibilitySummaryRequestDTO;
 use Lightit\Shared\Integrations\PVerify\DataTransferObjects\PVerifySubscriberDTO;
-use Lightit\Shared\Integrations\PVerify\Requests\EligibilitySummary;
-use Lightit\Shared\Integrations\PVerify\Requests\GetEligibilitySummary;
+use Lightit\Shared\Integrations\PVerify\Requests\EligibilitySummaryRequest;
+use Lightit\Shared\Integrations\PVerify\Requests\GetEligibilitySummaryResultsRequest;
 
 class MedicareAdvantageEligibilityCheckAction
 {
@@ -23,9 +25,14 @@ class MedicareAdvantageEligibilityCheckAction
             memberID: $getAvailableDMEProvidersDto->member_id,
         );
 
-        $eligibilityRequest = new EligibilitySummary(
-            payerCode: $getAvailableDMEProvidersDto->payer,
-            subscriber: $subscriberDTO,
+        $eligibilityRequest = new EligibilitySummaryRequest(
+            new EligibilitySummaryRequestDTO(
+                firstName: $subscriberDTO->firstName,
+                lastName: $subscriberDTO->lastName,
+                dob: Carbon::parse($subscriberDTO->dob),
+                memberID: $subscriberDTO->memberID,
+                payerCode: $getAvailableDMEProvidersDto->payer,
+            )
         );
 
         $response = $eligibilityRequest->send();
@@ -37,7 +44,7 @@ class MedicareAdvantageEligibilityCheckAction
         }
 
         sleep(5);
-        $eligibilityResultRequest = new GetEligibilitySummary(
+        $eligibilityResultRequest = new GetEligibilitySummaryResultsRequest(
             requestId: $eligibilityResponse['RequestID'],
         );
         $eligibilityResultResponse = $eligibilityResultRequest->send()->json();

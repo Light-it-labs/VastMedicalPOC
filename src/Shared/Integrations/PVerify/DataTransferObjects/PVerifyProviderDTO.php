@@ -6,9 +6,14 @@ namespace Lightit\Shared\Integrations\PVerify\DataTransferObjects;
 
 class PVerifyProviderDTO
 {
+    public string $lastName;
+    public string $npi;
+
     public function __construct(
-        public string $lastName = 'Palumbo',
-        public string $npi = '1043478878',
+        ?string $lastName = null,
+        ?string $npi = null,
     ) {
+        $this->lastName = $lastName ?? (string) config('services.pverify.provider_last_name');
+        $this->npi = $npi ?? (string) config('services.pverify.provider_npi');
     }
 }

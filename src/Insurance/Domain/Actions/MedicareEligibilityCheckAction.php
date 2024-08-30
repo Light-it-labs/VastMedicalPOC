@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Lightit\Insurance\Domain\Actions;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use Lightit\Insurance\Domain\DataTransferObjects\MedicareEligibilityCheckDto;
 use Lightit\Insurance\Domain\DataTransferObjects\MedicareEligibilityResponseDto;
+use Lightit\Shared\Integrations\PVerify\DataTransferObjects\EligibilitySummaryRequestDTO;
 use Lightit\Shared\Integrations\PVerify\DataTransferObjects\PVerifySubscriberDTO;
-use Lightit\Shared\Integrations\PVerify\Requests\EligibilitySummary;
+use Lightit\Shared\Integrations\PVerify\Requests\EligibilitySummaryRequest;
 
 class MedicareEligibilityCheckAction
 {
@@ -24,9 +26,14 @@ class MedicareEligibilityCheckAction
             memberID: $getAvailableDMEProvidersDto->member_id,
         );
 
-        $eligibilityRequest = new EligibilitySummary(
-            payerCode: self::MEDICARE_PAYER_CODE,
-            subscriber: $subscriberDTO,
+        $eligibilityRequest = new EligibilitySummaryRequest(
+            new EligibilitySummaryRequestDTO(
+                firstName: $subscriberDTO->firstName,
+                lastName: $subscriberDTO->lastName,
+                dob: Carbon::parse($subscriberDTO->dob),
+                memberID: $subscriberDTO->memberID,
+                payerCode: self::MEDICARE_PAYER_CODE,
+            )
         );
 
         $response = $eligibilityRequest->send();

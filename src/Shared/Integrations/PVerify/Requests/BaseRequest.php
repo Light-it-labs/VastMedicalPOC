@@ -16,6 +16,7 @@ abstract class BaseRequest extends Request
     use HasConnector;
 
     protected string $connector = PVerifyConnector::class;
+    
     private string $token;
 
     public function __construct()

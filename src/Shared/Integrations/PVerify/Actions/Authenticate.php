@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Lightit\Shared\Integrations\PVerify\Actions;
 
 use Illuminate\Support\Facades\Cache;
-use Lightit\Shared\Integrations\PVerify\Requests\GetToken;
+use Lightit\Shared\Integrations\PVerify\Requests\GetTokenRequest;
 
 class Authenticate
 {
-    private readonly GetToken $getToken;
+    private readonly GetTokenRequest $getToken;
 
     public function __construct()
     {
-        $this->getToken = new GetToken();
+        $this->getToken = new GetTokenRequest();
     }
 
     public function authenticate(): string

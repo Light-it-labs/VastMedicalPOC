@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Lightit\Shared\Integrations\PVerify\Requests;
 
 use Illuminate\Support\Carbon;
+use Lightit\Shared\Integrations\PVerify\DataTransferObjects\EligibilitySummaryRequestDTO;
 use Lightit\Shared\Integrations\PVerify\DataTransferObjects\PVerifyProviderDTO;
-use Lightit\Shared\Integrations\PVerify\DataTransferObjects\PVerifySubscriberDTO;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Traits\Body\HasJsonBody;
 
-class EligibilitySummary extends BaseRequest implements HasBody
+class EligibilitySummaryRequest extends BaseRequest implements HasBody
 {
     use HasJsonBody;
 
@@ -19,8 +19,7 @@ class EligibilitySummary extends BaseRequest implements HasBody
     protected PVerifyProviderDTO $provider;
 
     public function __construct(
-        public string $payerCode,
-        public PVerifySubscriberDTO $subscriber,
+        public EligibilitySummaryRequestDTO $data,
     ) {
         $this->provider = new PVerifyProviderDTO();
         parent::__construct();
@@ -28,26 +27,26 @@ class EligibilitySummary extends BaseRequest implements HasBody
 
     public function resolveEndpoint(): string
     {
-        return 'api/EligibilitySummary';
+        return 'API/EligibilitySummary';
     }
 
     protected function defaultBody(): array
     {
         return [
-            "payerCode" => $this->payerCode,
+            "payerCode" => $this->data->payerCode,
             "provider" => [
                 "lastName" => $this->provider->lastName,
                 "npi" => $this->provider->npi,
             ],
             "subscriber" => [
-                "firstName" => $this->subscriber->firstName,
-                "lastName" => $this->subscriber->lastName,
-                "dob" => $this->subscriber->dob,
-                "memberID" => $this->subscriber->memberID,
+                "firstName" => $this->data->firstName,
+                "lastName" => $this->data->lastName,
+                "dob" => $this->data->dob->format('m/d/Y'),
+                "memberID" => $this->data->memberID,
             ],
             "isSubscriberPatient" => "True",
-            "doS_StartDate" => Carbon::now()->subDay()->format('m-d-Y'),
-            "doS_EndDate" => Carbon::now()->addDay()->format('m-d-Y'),
+            "doS_StartDate" => Carbon::now()->subDay()->format('m/d/Y'),
+            "doS_EndDate" => Carbon::now()->addDay()->format('m/d/Y'),
         ];
     }
 }

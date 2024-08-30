@@ -8,7 +8,7 @@ use Lightit\Shared\Integrations\PVerify\PVerifyConnector;
 use Saloon\Enums\Method;
 use Saloon\Traits\Request\HasConnector;
 
-class GetAllPayers extends BaseRequest
+class GetAllPayersRequest extends BaseRequest
 {
     use HasConnector;
 
